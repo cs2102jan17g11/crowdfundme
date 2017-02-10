@@ -1,0 +1,1 @@
+alias pg_dump=/Applications/mappstack-5.6.30-0/postgresql/bin/pg_dump 
