@@ -1,1 +1,2 @@
+DROP TABLE Projects;
 DROP TABLE Users;
