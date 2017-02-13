@@ -1,5 +1,6 @@
 body {
     padding-top: 5em;
+    background-color: #f3f3f3;
 }
 
 footer {
@@ -7,4 +8,31 @@ footer {
     margin-top: 2em;
     margin-bottom: 2em;
     border-top: 0.1em solid black;
+}
+
+.navbar-inverse {
+    background-color: white;
+    border-color: #ff7575;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: red;
+}
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: red;
+}
+
+/* Overwriting default */
+.navbar-inverse .navbar-brand  {
+    color: red;
+    font-weight: bold;
+}
+
+#navbar ul > li :hover {
+    --webkit-transition: box-shadow linear .1s;
+    -moz-transition: box-shadow linear .1s;
+    transition: box-shadow linear .1s;
+    -webkit-box-shadow: 0 0.2em red;
+    -moz-box-shadow: 0 0.2em red;
+    box-shadow: 0 0.2em red;
 }
