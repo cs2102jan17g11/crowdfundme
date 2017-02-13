@@ -17,5 +17,6 @@ function getProjectNames() {
         echo '<div><a>' . $row[2] . '</a></div>';
         echo '</div>';
     }
+    pg_free_result($result);
 }
 ?>
