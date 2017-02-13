@@ -10,6 +10,20 @@ footer {
     border-top: 0.1em solid black;
 }
 
+.splash {
+    background-image: url("/img/pexels-photo-132924.jpeg");
+    background-position: center;
+    background-size: cover;
+    height: 20vw;
+    opacity: 0.8;
+}
+
+.splash h1 {
+    text-align: center;
+    padding-top: 70px;
+    color: white;
+}
+
 .navbar-inverse {
     background-color: white;
     border-color: #ff7575;

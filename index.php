@@ -28,17 +28,23 @@
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li><a href="/create.php">Create a Project</a></li>
-        <li class="active"><a href="#">Explore</a></li>
+        <li><a href="/projects.php">Explore</a></li>
         <li><a href="/about.php">About</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
 
+<div class="splash">
+  <h1>Create Amazing <span style="color:red">Projects</span></h1>
+</div>
 <div class="container">
-    <h1>We have <?php countAllProjects() ?> projects!</h1>
     <div class="row">
-      <?php getProjectNames() ?>  
+      
+      <div class="col-md-6 col-md-offset-3">
+        <h1>We have <?php countAllProjects() ?> projects!</h1>
+        <p>Click on projects to see them!<p>
+      </div>
     </div>
 </div>
 <?php

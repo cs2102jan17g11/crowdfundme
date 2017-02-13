@@ -28,8 +28,8 @@
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Create a Project</a></li>
-        <li><a href="/projects">Explore</a></li>
-        <li><a href="/about">About</a></li>
+        <li><a href="/projects.php">Explore</a></li>
+        <li><a href="/about.php">About</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -38,7 +38,7 @@
 <div class="container">
     <h1>We have <?php countAllProjects() ?> projects!</h1>
     <div class="row">
-      <?php getProjectNames() ?>  
+      NOT IMPLEMENTED YET
     </div>
 </div>
 <?php
