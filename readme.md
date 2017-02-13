@@ -17,13 +17,13 @@ Note: it is assumed that the postgres database name for this project is called `
 You can verify this by trying to access the database with
 `pgcli crowdfunme -U postgres`
 
-Drop the existing `crowdfundme` database.
-`dropdb crowdfundme -U postgres`
-Then, create a new database
-`createdb crowdfundme -U postgres`
+Drop the existing `crowdfundme` database.  
+`dropdb crowdfundme -U postgres`  
+Then, create a new database  
+`createdb crowdfundme -U postgres`  
 Then, run
-`psql crowdfundme -U postgres < sqls/schemas.sql`
-`psql crowdfundme -U postgres < sqls/data.sql`
+`psql crowdfundme -U postgres < sqls/schemas.sql`  
+`psql crowdfundme -U postgres < sqls/data.sql`  
 
 # Project Structure
 ## Site structure
