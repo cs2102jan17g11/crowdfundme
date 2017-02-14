@@ -19,4 +19,14 @@ function getProjectNames() {
     }
     pg_free_result($result);
 }
+
+function isValidUser($username) {
+    $query = "SELECT u.username FROM users u WHERE u.username = '$username'";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    // var_dump(pg_num_rows($result));
+    $bool = pg_num_rows($result) == 1;
+    pg_free_result($result);
+    echo $bool;
+    return $bool;
+}
 ?>

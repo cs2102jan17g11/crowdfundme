@@ -8,13 +8,15 @@
     $dbconn = pg_connect(pg_connect_string)
         or die('Could not connect: ' . pg_last_error());
     include_once("../sqls.php");
-
 ?>
 <?php
-  $ob_start();
+  ob_start();
   session_start();
-  if(isset($_SESSION['user'] == "")) {
-    header("/login.php");
+  if(isset($_SESSION['user'])) {
+    echo 'logged in as ' . $_SESSION['user'];
+  } else {
+    echo 'redirecting';
+    header("Location: /login.php");
   }
 ?>
 
@@ -48,10 +50,6 @@
 <div class="container">
     <h1>We have <?php countAllProjects() ?> projects!</h1>
     <div class="row">
-      <form method="post" action="/projects/create.php">
-          <input type="text" name="login"/>
-          <button>Submit</button>
-      </form>
       NOT IMPLEMENTED YET
     </div>
 </div>
