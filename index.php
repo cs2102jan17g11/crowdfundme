@@ -2,12 +2,12 @@
 <head>
 <?php
     
-    include_once("./env.php");
-    include_once("./headers.php");
+    include_once("env.php");
+    include_once("headers.php");
     
     $dbconn = pg_connect(pg_connect_string)
         or die('Could not connect: ' . pg_last_error());
-    include_once("./sqls.php");
+    include_once("sqls.php");
 
 ?>
     <title>Explore | Projects</title>
@@ -27,9 +27,9 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="/projects/create.php">Create a Project</a></li>
-        <li><a href="/projects.php">Explore</a></li>
-        <li><a href="/about.php">About</a></li>
+        <li><a href="projects/create.php">Create a Project</a></li>
+        <li><a href="projects.php">Explore</a></li>
+        <li><a href="about.php">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/login.php">Login</a></li>
@@ -51,7 +51,7 @@
     </div>
 </div>
 <?php
-  include("./footer.php");
+  include("footer.php");
   pg_close($dbconn);
 ?>
 </body>

@@ -1,13 +1,13 @@
 <html>
 <head>
 <?php
-  
-  include_once("./env.php");
-  include_once("./headers.php");
-  
-  $dbconn = pg_connect(pg_connect_string)
-      or die('Could not connect: ' . pg_last_error());
-  include_once("./sqls.php");
+    
+    include_once("env.php");
+    include_once("headers.php");
+    
+    $dbconn = pg_connect(pg_connect_string)
+        or die('Could not connect: ' . pg_last_error());
+    include_once("sqls.php");
 
 ?>
     <title>Explore | Projects</title>
@@ -42,7 +42,7 @@
     </div>
 </div>
 <?php
-  include("./footer.php");
+  include("footer.php");
   pg_close($dbconn);
 ?>
 </body>
