@@ -12,10 +12,11 @@
 <?php
   ob_start();
   session_start();
-  if(isset($_SESSION['user'])) {
+  if(isset($_SESSION['username'])) {
     echo 'logged in as ' . $_SESSION['username'];
   } else {
     echo 'You are not logged in, redirecting you to login.';
+    $_SESSION['referred_from'] = "/projects/create.php";
     header("Refresh: 2; url=/login.php");
   }
 ?>

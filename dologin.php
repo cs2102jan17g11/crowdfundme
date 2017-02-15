@@ -19,7 +19,13 @@ if(isset($_SESSION['username'])) {
     $success = isValidUser($name);
     if($success) {
         $_SESSION['username'] = $name;
-        echo 'logged you in!';
+
+        if(isset($_SESSION['referred_from'])) {
+            $loc = $_SESSION['referred_from'];
+            unset($_SESSION['referred_from']);
+            echo "<script>location.replace('$loc');</script>";
+        } 
+
     } else {
         echo 'wrong credentials';
     }
