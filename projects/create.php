@@ -30,9 +30,18 @@
 ?>
 
 <div class="container">
-    <h1>We have <?php countAllProjects() ?> projects!</h1>
+    <h1 class="jumbotron">Hi, <?php echo getFirstName($_SESSION['username']); ?>. <br/><small>We have <?php echo countAllOnGoingProjects() ?> ongoing projects, we <span class="red">warmly</span> welcome you to be one of them!</small></h1>
     <div class="row">
       <form>
+        <div class="form-group">
+          <label>Title for your project</label>
+          <input type="text" class="form-control" placeholder="Air bed for your bestfriends">
+        </div>
+        <div class="form-group">
+          <label>Description for your project</label>
+          <input class="form-control" type="textarea" placeholder="This project will be one of the most wanted because...">
+        </div>
+        <button type="submit" class="btn btn-primary">Start my project!</button>
       </form>
     </div>
 </div>
