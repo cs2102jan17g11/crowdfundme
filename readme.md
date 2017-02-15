@@ -12,6 +12,10 @@ Setup your variables that will be used by php.
 `cp example.env.php env.php`
 Update `pg_port`, `pg_dbname` `pg_username`, `pg_password` to your own local dev's setting.
 
+## Additional configs (has to be done on local)
+### 404 Error page
+Find `httpd.conf` in `apache2/conf` and add this line `ErrorDocument 404 /404.php` at around line 443~, which is together with the other `ErrorDocument` configs. Restart your apache server if the 404 page is the default one.
+
 # Updating Database
 Note: it is assumed that the postgres database name for this project is called `crowdfundme` and the owner of that db (with creation/update/delete permission) is `postgres`, hosting address is `localhost` and port is `5432`.
 You can verify this by trying to access the database with
