@@ -13,10 +13,10 @@
   ob_start();
   session_start();
   if(isset($_SESSION['user'])) {
-    echo 'logged in as ' . $_SESSION['user'];
+    echo 'logged in as ' . $_SESSION['username'];
   } else {
-    echo 'redirecting';
-    header("Location: /login.php");
+    echo 'You are not logged in, redirecting you to login.';
+    header("Refresh: 2; url=/login.php");
   }
 ?>
 
