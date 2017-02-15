@@ -8,8 +8,8 @@ $dbconn = pg_connect(pg_connect_string)
 ob_start();
 session_start();
 
-if(isset($_SESSION['user'])) {
-    echo '<script>location.reload("login.php");</script>';
+if(isset($_SESSION['username'])) {
+    echo '<script>location.replace("index.php");</script>';
 } else {
 
     $name = trim($_POST['username']);
@@ -18,6 +18,7 @@ if(isset($_SESSION['user'])) {
 
     $success = isValidUser($name);
     if($success) {
+        $_SESSION['username'] = $name;
         echo 'logged you in!';
     } else {
         echo 'wrong credentials';

@@ -1,8 +1,8 @@
 <?php
 ob_start();
 session_start();
-if(isset($_SESSION['user'])) {
-    echo 'Hi, ' . $_SESSION['user'] . 'Already logged in';
+if(isset($_SESSION['username'])) {
+    echo 'Hi, ' . $_SESSION['username'] . 'Already logged in';
 } else {
 ?>
 <form method="post" action="/dologin.php">
