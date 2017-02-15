@@ -23,10 +23,18 @@ function getProjectNames() {
 function isValidUser($username) {
     $query = "SELECT u.username FROM users u WHERE u.username = '$username'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    // var_dump(pg_num_rows($result));
     $bool = pg_num_rows($result) == 1;
     pg_free_result($result);
     echo $bool;
     return $bool;
+}
+
+function getFirstName($username) {
+    $query = "SELECT u.fullname FROM users u WHERE u.username = '$username'";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+    $data = pg_fetch_row($result)[0];
+    pg_free_result($result);
+    return $data;
 }
 ?>
