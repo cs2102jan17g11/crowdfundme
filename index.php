@@ -31,6 +31,9 @@
         <li><a href="/projects.php">Explore</a></li>
         <li><a href="/about.php">About</a></li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/login.php">Login</a></li>
+      </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
