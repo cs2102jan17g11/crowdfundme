@@ -20,14 +20,14 @@
 ?>
 
 <div class="splash">
-  <h1>Create Amazing <span style="color:red">Projects</span></h1>
+  <h1>Create Amazing <span class="red">Projects</span></h1>
 </div>
 <div class="container">
     <div class="row">
       
       <div class="col-md-6 col-md-offset-3">
-        <h1>We have <?php countAllProjects() ?> projects!</h1>
-        <p>Click on projects to see them!<p>
+        <h1>We have <?php echo countAllProjects() ?> projects!</h1>
+        <p>Click on the projects to see them!<p>
       </div>
     </div>
 </div>

@@ -20,7 +20,7 @@
 ?>
 
 <div class="container">
-    <h1>We have <?php countAllProjects() ?> projects!</h1>
+    <h1>We have <?php echo countAllProjects(); ?> ongoing projects!</h1>
     <div class="row">
       <?php getProjectNames() ?>  
     </div>

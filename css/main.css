@@ -10,6 +10,10 @@ footer {
     border-top: 0.1em solid black;
 }
 
+a {
+    color: red;
+}
+
 .splash {
     background-image: url("/img/pexels-photo-132924.jpeg");
     background-position: center;
@@ -49,4 +53,17 @@ footer {
     -webkit-box-shadow: 0 0.2em red;
     -moz-box-shadow: 0 0.2em red;
     box-shadow: 0 0.2em red;
+}
+
+.red {
+    color: red;
+}
+
+.jumbotron {
+    background-color: transparent; /* removing default color */
+}
+
+.btn-primary {
+    background-color: red;
+    border-color: #a94442;
 }
