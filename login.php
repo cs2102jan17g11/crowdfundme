@@ -2,7 +2,8 @@
 ob_start();
 session_start();
 if(isset($_SESSION['username'])) {
-    echo 'Hi, ' . $_SESSION['username'] . 'Already logged in';
+    echo 'Hi, ' . $_SESSION['username'] . 'Already logged in.';
+    header("Refresh: 1; url=/");
 } else {
 ?>
 <form method="post" action="/dologin.php">

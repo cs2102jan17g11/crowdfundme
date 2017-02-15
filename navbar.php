@@ -33,6 +33,7 @@ function navbar($URL) {
             if(isset($_SESSION['username'])) {
               $user = getFirstName($_SESSION['username']);
               echo "<li><a href='#'>Hi, $user</a></li>";
+              echo "<li><a href='/logout.php'>Logout</a></li>";
             } else {
               echo "<li><a href='/login.php'>Login</a></li>";
             }
