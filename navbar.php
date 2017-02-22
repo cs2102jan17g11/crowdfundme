@@ -3,7 +3,7 @@ include_once("constants.php");
 include_once("sqls.php");
 function navbar($URL) {
 ?>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -33,9 +33,9 @@ function navbar($URL) {
             if(isset($_SESSION['username'])) {
               $user = getFirstName($_SESSION['username']);
               echo "<li><a href='#'>Hi, $user</a></li>";
-              echo "<li><a href='/logout.php'>Logout</a></li>";
+              echo "<li><a class='btn btn-default btn-outline btn-circle collapsed' href='/logout.php'>Logout</a></li>";
             } else {
-              echo "<li><a href='/login.php'>Login</a></li>";
+              echo "<li><a class='btn btn-default btn-outline btn-circle collapsed' href='/login.php'>Login / Sign Up</a></li>";
             }
           ?>
       </ul>
