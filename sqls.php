@@ -12,23 +12,24 @@ function countAllOnGoingProjects() {
 }
 
 function getProjectNames() {
-  $query = 'SELECT p.project_id, p.title, p.description, u.username FROM projects p, users u WHERE p.creator = u.username';
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    $query = 'SELECT p.project_id, p.title, p.description, u.username, p.blurb FROM projects p, users u WHERE p.creator = u.username';
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-  while($row = pg_fetch_row($result)) {
-    echo '<div class="col-md-4">';
-    echo '<div class="panel panel-default"> <div class="panel-body" style="padding: 20px">';
-    echo '<h2><a href="projectdetails2.php?project=' . $row[0] . '">' . $row[1] . '</a></h2>';
-    echo '<div ><a>' . $row[3] . '</a></div>';
-    echo '<br /><br />';
-    echo '<div class="small">' . $row[2] . '</div>';
-    echo '<br /><br />';
-    echo '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:' . 70 . '%"></div></div>';
-    echo '<br />';
-    echo '</div></div>';
-    echo '</div>';
-  }
-  pg_free_result($result);
+    while($row = pg_fetch_row($result)) {
+        echo '<div class="col-md-4">';
+        echo '<img src="' .$row[4] . '" style="max-width:100%;" />';
+        echo '<div class="panel panel-default"> <div class="panel-body" style="padding: 0 20px">';
+        echo '<h3><a href="projectdetails.php?project=' . $row[0] . '">' . $row[1] . '</a></h3>';
+        echo '<div>by <a>' . $row[3] . '</a></div>';
+        echo '<br /><br />';
+        echo '<div class="small ellipsis">' . $row[2] . '</div>';
+        echo '<br /><br />';
+        echo '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:' . 70 . '%"></div></div>';
+        echo '<br />';
+        echo '</div></div>';
+        echo '</div>';
+    }
+    pg_free_result($result);
 }
 
 function isValidUser($username) {
