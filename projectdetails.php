@@ -7,99 +7,92 @@
   $dbconn = pg_connect(pg_connect_string)
   or die('Could not connect: ' . pg_last_error());
   include_once("sqls.php");
+  include_once("util.php");
   ?>
   <title>Explore | Projects</title>
 </head>
 
 <body>
+
   <?php
   include_once("navbar.php");
   navbar(URL_PROJECTS_VIEW);
+
+  $project = getProject($_GET['project']);
+
   ?>
 
   <div class="container">
-    <div class="row row-offcanvas row-offcanvas-right">
-      <div class="col-xs-12 col-sm-9">
-        <div class="jumbotron">
-          <h1>
-            <?php
-            $query = "SELECT name FROM projects WHERE name='DBMS'";
-            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-            while ($row = pg_fetch_row($result)){
-              echo $row[0] ;
-            }
-            ?>
-          </h1>
-          <p>
-            <?php
-            $query = "SELECT contents FROM projects WHERE name='DBMS'";
-            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-            while ($row = pg_fetch_row($result)){
-              echo $row[0] ;
-            }
-            ?>
-          </p>
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-        <?php
-        $query = "SELECT name FROM projects";
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-        while ($row = pg_fetch_array($result)){
-          echo '<a href="#" class="list-group-item">' . $row['name']. '</a>';
-        }
-        ?>
-      </div>
-      <form>
-        Title: <input type="text" name="name">
-        Content: <input type="text" name="contents">
-        <input type="submit" name="formSubmit" value="Search" >
-      </form>
 
-      <?php
-      if(isset($_GET['formSubmit']))
-      {
-        $query = "SELECT name, contents FROM projects WHERE name like '%".$_GET['name']."%' AND contents like '%".$_GET['contents']."%' ";
-        echo "<b>SQL:   </b>".$query."<br><br>";
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-        while ($row = pg_fetch_array($result)){
-          echo '<a href="#" class="list-group-item">' . $row['name']. '</a>';
-        }
-        pg_free_result($result);
-      }
-      ?>
-
-      <form method="post">
-        Title: <input type="text" name="name">
-        Content: <input type="text" name="contents">
-        <select name="owner"> <option value="">Select owner</option>
-
-          <?php
-          $query = 'SELECT username FROM users';
-          $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
-          while ($row = pg_fetch_array($result)){
-            echo "<option value=\"".$row[0]."\">".$row[0]."</option><br>";
-          }
-
-          pg_free_result($result);
-          ?>
-        </select>
-        <input type="submit" name="formCreate" value="Create Project" >
-        <?php
-        $submitbutton= $_POST['formCreate'];
-        if($submitbutton){
-          createProject($name,$contents,$owner);
-        }
-        ?>
-
-      </form>
+    <div class="box-padding">
+      <h1><?php echo $project[1]?></h1>
+      <h4><i>by <a><?php echo $project[2] ?></a></i></h4>
     </div>
 
-  </div>
-  <?php
-  include("footer.php");
-  pg_close($dbconn);
-  ?>
-</body>
-</html>
+    <br />
+
+    <div class="row" >
+      <div class="col-sm-12 col-md-8">
+        <img style="max-width: 100%; height: auto" src="<?php echo $project[3] ?>" alt="">
+      </div>
+
+      <div class="col-sm-12 col-md-4">
+        <div class="panel panel-default" style="max-height: 100%" >
+          <div class="panel-body" >
+
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo calculatePercantage($project[8], $project[7])?>%">
+              </div>
+            </div>
+
+            <div class="content-padding">
+
+              <div class="red"><h2><b>$<?php echo $project[8] ?></b></h2></div>
+              <div>pledged of $<?php echo $project[7] ?> goal</div>
+
+
+              <div><h3>0</h3></div>
+              <div>backers</div>
+
+
+              <div><h3><?php echo dateDifference($project[6]) ?></h3></div>
+              <div>Days Left (<?php echo $project[6] ?>)</div>
+
+            </div>
+
+            <br />
+
+          </div>
+        </div>
+
+        <form method="post" action="/dologin.php">
+          <button class="btn btn-primary btn-lg btn-block">Fund this project</button>
+        </form>
+
+      </div>
+    </div>
+
+    <br /> <br />
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="content-padding">
+              <h3>Project Description</h3>
+              <br />
+              <p><?php echo $project[4] ?></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <?php
+    include("footer.php");
+    pg_close($dbconn);
+    ?>
+  </body>
+  </html>

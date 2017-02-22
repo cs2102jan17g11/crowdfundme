@@ -5,7 +5,7 @@
     }
 
     function dateDifference($date){
-        $diff = strtotime($date) - time();
+        $diff = floor((strtotime($date) - time())/(86400));
         if($diff > 0){
             return $diff;
         }
