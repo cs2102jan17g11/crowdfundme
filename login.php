@@ -19,4 +19,3 @@ if(isset($_SESSION['username'])) {
 <?php
 } // close off the php-else
 ?>
-

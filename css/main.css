@@ -67,3 +67,7 @@ a {
     background-color: red;
     border-color: #a94442;
 }
+
+.box-padding{
+    padding: 20px;
+}
