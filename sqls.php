@@ -2,8 +2,13 @@
 function countAllProjects() {
     $query = 'SELECT count(*) FROM projects';
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    echo pg_fetch_row($result)[0];
+    $data = pg_fetch_row($result)[0];
     pg_free_result($result);
+    return $data;
+}
+
+function countAllOnGoingProjects() {
+    return countAllProjects();
 }
 
 function getProjectNames() {
