@@ -82,17 +82,20 @@
               <h3>Project Description</h3>
               <br />
               <p><?php echo $project[4] ?></p>
+              <br /><br />
             </div>
           </div>
         </div>
       </div>
     </div>
 
+  </div>
 
 
-    <?php
-    include("footer.php");
-    pg_close($dbconn);
-    ?>
-  </body>
-  </html>
+
+  <?php
+  include("footer.php");
+  pg_close($dbconn);
+  ?>
+</body>
+</html>
