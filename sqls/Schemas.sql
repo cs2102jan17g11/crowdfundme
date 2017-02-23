@@ -13,25 +13,35 @@ VALUES ('admin@admin.com', 'Admin', 'Admin', '$2y$10$/MV3fWHlSCzfqZAHD6ky7eCINm0
 
 /* Projects and funding schemas below are for testing of profile only*/
 CREATE TABLE Projects (
-  Project_id SERIAL,
-  Title VARCHAR(50) NOT NULL,
-  Creator VARCHAR(255) NOT NULL,
-  Img_src VARCHAR(2000) NOT NULL,
-  Description TEXT NOT NULL,
-  Start_date DATE NOT NULL,
-  End_date DATE NOT NULL,
-  Goal INTEGER NOT NULL CONSTRAINT positive_goal CHECK(Goal > 0),
-  Raised INTEGER DEFAULT 0 CONSTRAINT raised_smaller_than_goal CHECK(Raised < Goal),
-  PRIMARY KEY (Project_id),
-  CONSTRAINT start_date_before_end_date CHECK(Start_date <= End_date)
+  project_id SERIAL PRIMARY KEY,
+  title VARCHAR(50) NOT NULL,
+  creator VARCHAR(255) NOT NULL REFERENCES Users(email) ON DELETE CASCADE ON UPDATE CASCADE,
+  img_src VARCHAR(2000) NOT NULL,
+  description TEXT NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  goal INTEGER NOT NULL CONSTRAINT positive_goal CHECK(goal > 0),
+  raised INTEGER DEFAULT 0 CONSTRAINT raised_smaller_than_goal CHECK(raised < goal),
+  CONSTRAINT start_date_before_end_date CHECK(start_date <= end_date)
 );
 
-Create Table Funding(
+CREATE TABLE Rewards (
+  reward_id SERIAL NOT NULL,
+  title VARCHAR(50) NOT NULL,
+  pledge INTEGER NOT NULL,
+  description TEXT NOT NULL,
+  quantity INTEGER NOT NULL,
+  project_id VARCHAR(50) NOT NULL,
+  PRIMARY KEY (reward_id),
+  FOREIGN KEY Project_id REFERENCES Project(project_id)
+);
+
+CREATE TABLE Fundings (
   funding_id VARCHAR(50) PRIMARY KEY,
   funding_datetime TIMESTAMP NOT NULL,
   amount INTEGER NOT NULL,
   email VARCHAR(255) NOT NULL,
   project_id CHAR(50) NOT NULL,
-  FOREIGN KEY Reward_id REFERENCES Reward(Reward_id),
-  FOREIGN KEY Email REFERENCES User(Email)
+  FOREIGN KEY reward_id REFERENCES Reward(reward_id),
+  FOREIGN KEY email REFERENCES User(email)
 );
