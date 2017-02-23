@@ -85,8 +85,17 @@ function updateProject($projectId, $title, $description, $blurb){
 }
 
 function createProject($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised) {
-  $query = "INSERT INTO Projects VALUES(DEFAULT, '$title', '$creator', '$img_src', '$description', '$start_date', '$end_date', '$goal', '$raised')";
-  echo $query;
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $start_date = $start_date == '' ? NULL : $start_date;
+  $end_date = $end_date == '' ? NULL : $end_date;
+  $goal = intval($goal);
+  $raised = intval($raised);
+  $params = array($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised);
+  $query = pg_query_params('INSERT INTO Projects VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)', $params);
+  $result = pg_query($query); // or die('Query failed: ' . pg_last_error());
+  if(!$result) {
+    echo 'Error in ' . pg_result_error(pg_get_result());
+  } else {
+    pg_free_result($result);
+  }
 }
 ?>

@@ -50,32 +50,32 @@
       <form method="post" action="create.php">
         <div class="form-group">
           <label>Title for your project</label>
-          <input type="text" class="form-control" placeholder="Air bed for your bestfriends" name="title">
+          <input type="text" class="form-control" placeholder="Air bed for your bestfriends" name="title" value=<?php if(isset($_POST['title'])) echo $_POST['title']; ?>>
         </div>
         <div class="form-group">
           <label>Attach an image to your project!</label>
-          <input class="form-control" type="textarea" placeholder="https://image.image" name="img_src">
+          <input class="form-control" type="textarea" placeholder="https://image.image" name="img_src" value=<?php if(isset($_POST['img_src'])) echo $_POST['img_src']; ?>>
         </div>
         <div class="form-group">
           <label>Description for your project</label>
-          <input class="form-control" type="textarea" placeholder="This project will be one of the most wanted because..." name="description">
+          <input class="form-control" type="textarea" placeholder="This project will be one of the most wanted because..." name="description" value=<?php if(isset($_POST['description'])) echo $_POST['description']; ?>>
         </div>
         <div class="form-group row">
           <div class="col-md-3">
             <label>Start date!</label>
-            <input class="form-control" type="date" name="start_date">
+            <input class="form-control" type="date" name="start_date" value=<?php if(isset($_POST['start_date'])) echo $_POST['start_date']; ?>>
           </div>
           <div class="col-md-3">
             <label>End date!</label>
-            <input class="form-control" type="date" name="end_date">
+            <input class="form-control" type="date" name="end_date" value=<?php if(isset($_POST['end_date'])) echo $_POST['end_date']; ?>>
           </div>
           <div class="col-md-3">
             <label>Your Goal!</label>
-            <input class="form-control" type="number" placeholder="1000" name="goal">
+            <input class="form-control" type="number" placeholder="1000" name="goal" value=<?php if(isset($_POST['goal'])) echo $_POST['goal']; ?>>
           </div>
           <div class="col-md-3">
             <label>Raised to date!</label>
-            <input class="form-control" type="number" placeholder="0" name="raised">
+            <input class="form-control" type="number" placeholder="0" name="raised" value=<?php if(isset($_POST['raised'])) echo $_POST['raised']; ?>>
           </div>
         </div>
         <button type="submit" name='submit' class="btn btn-primary">Start my project!</button>
