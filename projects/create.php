@@ -19,6 +19,18 @@
 
   echo isset($_POST['submit']) ? 'true' : 'false';
   echo var_dump($_POST);
+  if(isset($_POST['submit'])) {
+    createProject(
+      $_POST['title'],
+      $_SESSION['username'],
+      $_POST['img_src'],
+      $_POST['description'],
+      $_POST['start_date'],
+      $_POST['end_date'],
+      $_POST['goal'],
+      $_POST['raised']
+    );
+  }
 ?>
 
 

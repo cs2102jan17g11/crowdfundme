@@ -84,4 +84,9 @@ function updateProject($projectId, $title, $description, $blurb){
   pg_free_result($result);
 }
 
+function createProject($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised) {
+  $query = "INSERT INTO Projects VALUES(DEFAULT, '$title', '$creator', '$img_src', '$description', '$start_date', '$end_date', '$goal', '$raised')";
+  echo $query;
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+}
 ?>

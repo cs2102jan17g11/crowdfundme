@@ -6,7 +6,7 @@ INSERT INTO Users VALUES('vatsala', 'password', 'Vatsala Verma');
 
 INSERT INTO Projects
 VALUES(
-    1,
+    DEFAULT,
     'DBMS',
     'kenlsm',
     'https://s3-ap-southeast-1.amazonaws.com/cs2102jan17g11-crowdfundme/TS.png',
@@ -18,7 +18,7 @@ VALUES(
 );
 INSERT INTO Projects
 VALUES(
-    2,
+    DEFAULT,
     'Teribble',
     'ryan',
     'https://s3-ap-southeast-1.amazonaws.com/cs2102jan17g11-crowdfundme/TS.png',
@@ -30,7 +30,7 @@ VALUES(
 );
 INSERT INTO Projects
 VALUES(
-    3,
+    DEFAULT,
     'Faceless',
     'longyuan',
     'https://s3-ap-southeast-1.amazonaws.com/cs2102jan17g11-crowdfundme/TS.png',
@@ -42,7 +42,7 @@ VALUES(
 );
 INSERT INTO Projects
 VALUES(
-    4,
+    DEFAULT,
     'Apples',
     'changhui',
     'https://s3-ap-southeast-1.amazonaws.com/cs2102jan17g11-crowdfundme/TS.png',
