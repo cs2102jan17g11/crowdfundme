@@ -154,7 +154,7 @@ function updatePassword($email, $password) {
 }
 
 function getUserProjects($email) {
-    $query = "SELECT title, blurb, start_date, end_date, goal, raised FROM projects p WHERE p.creator = '" . $email . "' ORDER BY end_date DESC";
+    $query = "SELECT title, img_src, start_date, end_date, goal, raised FROM projects p WHERE p.creator = '" . $email . "' ORDER BY end_date DESC";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     return $result;

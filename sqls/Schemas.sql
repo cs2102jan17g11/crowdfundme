@@ -12,17 +12,18 @@ INSERT INTO Users (email, first_name, last_name, password, role)
 VALUES ('admin@admin.com', 'Admin', 'Admin', '$2y$10$/MV3fWHlSCzfqZAHD6ky7eCINm072KknluyL0.cR6R/bqOKwcWs0G', 'admin');
 
 /* Projects and funding schemas below are for testing of profile only*/
-Create Table Projects(
-  project_id VARCHAR(50) PRIMARY KEY,
-  title VARCHAR(50) NOT NULL,
-  blurb VARCHAR(2000) NOT NULL,
-  description TEXT NOT NULL,
-  start_date DATE NOT NULL,
-  end_date DATE NOT NULL,
-  goal INTEGER NOT NULL,
-  raised INTEGER,
-  creator VARCHAR(255) NOT NULL REFERENCES Users(email) ON DELETE CASCADE ON UPDATE CASCADE,
-  CHECK (end_date > start_date)
+CREATE TABLE Projects (
+  Project_id SERIAL,
+  Title VARCHAR(50) NOT NULL,
+  Creator VARCHAR(255) NOT NULL,
+  Img_src VARCHAR(2000) NOT NULL,
+  Description TEXT NOT NULL,
+  Start_date DATE NOT NULL,
+  End_date DATE NOT NULL,
+  Goal INTEGER NOT NULL CONSTRAINT positive_goal CHECK(Goal > 0),
+  Raised INTEGER DEFAULT 0 CONSTRAINT raised_smaller_than_goal CHECK(Raised < Goal),
+  PRIMARY KEY (Project_id),
+  CONSTRAINT start_date_before_end_date CHECK(Start_date <= End_date)
 );
 
 Create Table Funding(
@@ -34,22 +35,3 @@ Create Table Funding(
   FOREIGN KEY Reward_id REFERENCES Reward(Reward_id),
   FOREIGN KEY Email REFERENCES User(Email)
 );
-
-/*
-CREATE TABLE Projects (
-    Project_id SERIAL,
-    Title VARCHAR(50) NOT NULL,
-    Creator VARCHAR(255) NOT NULL,
-    Img_src VARCHAR(2000) NOT NULL,
-    Description TEXT NOT NULL,
-    Start_date DATE NOT NULL,
-    End_date DATE NOT NULL,
-    Goal INTEGER NOT NULL CONSTRAINT positive_goal CHECK(Goal > 0),
-    Raised INTEGER DEFAULT 0 CONSTRAINT raised_smaller_than_goal CHECK(Raised < Goal),
-    PRIMARY KEY (Project_id),
-    CONSTRAINT start_date_before_end_date CHECK(Start_date <= End_date)
-);
-*/
-
-
-
