@@ -5,8 +5,14 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Projects (
-    name VARCHAR(255) NOT NULL,
-    contents TEXT,
-    owner VARCHAR(255) REFERENCES Users(username) ON DELETE SET NULL,
-    PRIMARY KEY(name, owner)
+    Project_id SERIAL,
+    Title VARCHAR(50) NOT NULL,
+    Creator VARCHAR(255) NOT NULL,
+    Img_src VARCHAR(2000) NOT NULL,
+    Description TEXT NOT NULL,
+    Start_date DATE NOT NULL,
+    End_date DATE NOT NULL,
+    Goal INTEGER NOT NULL,
+    Raised INTEGER,
+    PRIMARY KEY (Project_id)
 );
