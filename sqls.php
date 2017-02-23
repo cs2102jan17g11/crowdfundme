@@ -12,7 +12,7 @@ function countAllOnGoingProjects() {
 }
 
 function getProjectNames() {
-    $query = 'SELECT p.project_id, p.title, p.description, u.username, p.blurb FROM projects p, users u WHERE p.creator = u.username';
+    $query = 'SELECT p.project_id, p.title, p.description, u.username, p.img_src FROM projects p, users u WHERE p.creator = u.username';
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     while($row = pg_fetch_row($result)) {
@@ -86,6 +86,21 @@ function updateProject($projectId, $title, $description, $blurb){
 }
 */
 
+function createProject($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised) {
+    $start_date = $start_date == '' ? NULL : $start_date;
+    $end_date = $end_date == '' ? NULL : $end_date;
+    $goal = intval($goal);
+    $raised = intval($raised);
+    $params = array($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised);
+    $query = pg_query_params('INSERT INTO Projects VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)', $params);
+    $result = pg_query($query); // or die('Query failed: ' . pg_last_error());
+    if(!$result) {
+        echo 'Error in ' . pg_result_error(pg_get_result());
+    } else {
+        pg_free_result($result);
+    }
+}
+
 function getFirstName($email) {
     $query = "SELECT u.first_name FROM users u WHERE u.email = '$email'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
@@ -139,7 +154,7 @@ function updatePassword($email, $password) {
 }
 
 function getUserProjects($email) {
-    $query = "SELECT title, blurb, start_date, end_date, goal, raised FROM projects p WHERE p.creator = '" . $email . "' ORDER BY end_date DESC";
+    $query = "SELECT title, img_src, start_date, end_date, goal, raised FROM projects p WHERE p.creator = '" . $email . "' ORDER BY end_date DESC";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     return $result;
