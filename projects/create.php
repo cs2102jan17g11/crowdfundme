@@ -12,7 +12,7 @@
 <?php
   ob_start();
   session_start();
-  if(!isset($_SESSION['username'])) {
+  if(!isset($_SESSION['userEmail'])) {
     $_SESSION['referred_from'] = "/projects/create.php";
     header("Location: /login.php");
   }
