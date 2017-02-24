@@ -33,11 +33,10 @@ function getProjectNames() {
 }
 
 function isValidUser($username) {
-  $query = "SELECT u.username FROM users u WHERE u.username = '$username'";
+  $query = "SELECT u.email FROM users u WHERE u.email = '$username'";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   $bool = pg_num_rows($result) == 1;
   pg_free_result($result);
-  echo $bool;
   return $bool;
 }
 

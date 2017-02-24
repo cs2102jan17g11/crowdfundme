@@ -45,7 +45,7 @@
 ?>
 
 <div class="container">
-    <h1 class="jumbotron">Hi, <?php echo getFirstName($_SESSION['username']); ?>. <br/><small>We have <?php echo countAllOnGoingProjects() ?> ongoing projects, we <span class="red">warmly</span> welcome you to be one of them!</small></h1>
+    <h1 class="jumbotron">Hi, <?php echo getFirstName($_SESSION['userEmail']); ?>. <br/><small>We have <?php echo countAllOnGoingProjects() ?> ongoing projects, we <span class="red">warmly</span> welcome you to be one of them!</small></h1>
     <div class="row">
       <form method="post" action="create.php">
         <div class="form-group">

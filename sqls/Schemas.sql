@@ -26,14 +26,13 @@ CREATE TABLE Projects (
 );
 
 CREATE TABLE Rewards (
-  reward_id SERIAL NOT NULL,
+  reward_id SERIAL PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
   pledge INTEGER NOT NULL,
   description TEXT NOT NULL,
   quantity INTEGER NOT NULL,
-  project_id VARCHAR(50) NOT NULL,
-  PRIMARY KEY (reward_id),
-  FOREIGN KEY Project_id REFERENCES Project(project_id)
+  project_id INTEGER NOT NULL,
+  FOREIGN KEY (project_id) REFERENCES Projects(project_id)
 );
 
 CREATE TABLE Fundings (
@@ -41,7 +40,7 @@ CREATE TABLE Fundings (
   funding_datetime TIMESTAMP NOT NULL,
   amount INTEGER NOT NULL,
   email VARCHAR(255) NOT NULL,
-  project_id CHAR(50) NOT NULL,
-  FOREIGN KEY reward_id REFERENCES Reward(reward_id),
-  FOREIGN KEY email REFERENCES User(email)
+  reward_id INTEGER NOT NULL,
+  FOREIGN KEY (reward_id) REFERENCES Rewards(reward_id),
+  FOREIGN KEY (email) REFERENCES Users(email)
 );
