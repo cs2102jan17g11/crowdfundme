@@ -40,6 +40,15 @@ function isValidUser($username) {
   return $bool;
 }
 
+function getProject($projectId){
+  $query = "SELECT * FROM projects p WHERE p.project_id='$projectId'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+  $data = pg_fetch_row($result);
+  pg_free_result($result);
+  return $data;
+}
+
 /*
 function getFirstName($username) {
   $query = "SELECT u.fullname FROM users u WHERE u.username = '$username'";
@@ -51,14 +60,7 @@ function getFirstName($username) {
 }
 
 
-function getProject($projectId){
-  $query = "SELECT * FROM projects p WHERE p.project_id='$projectId'";
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-  $data = pg_fetch_row($result);
-  pg_free_result($result);
-  return $data;
-}
 
 function getProjectRewards($projectId){
   $query = "SELECT r.reward_id, r.title, r.pledge, r.description, r.quantity FROM rewards r, projects p WHERE r.project_id = p.project_id AND p.project_id='$projectId'";
