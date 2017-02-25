@@ -1,3 +1,4 @@
+/*
 --
 -- PostgreSQL database dump
 --
@@ -113,3 +114,4 @@ ALTER TABLE ONLY projects
 -- PostgreSQL database dump complete
 --
 
+*/
