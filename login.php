@@ -20,16 +20,16 @@
 ?>
 
 <div class="container">
-    <div class="row">
-        <br/>
-        <div class="col-md-4 col-md-offset-4">
+    <h1>Log in</h1>
+
+    <!-- <div class="row"> -->
+        <div>
             <?php
                 if(isset($_SESSION['referred_from'])) {
                     echo '<div class="text-center">Seems like you need to login to view that page!</div><br/>';
                 }
             ?>
-            <div class="text-center"><h1>Log in</h1></div>
-            <div class="panel panel-default">
+            <!-- <div class="panel panel-default"> -->
                 <?php
                 if(isset($_SESSION['userEmail'])) {
                     echo 'Hi, ' . $_SESSION['userEmail'] . 'Already logged in.';
@@ -37,19 +37,23 @@
                 } else {
                 ?>
 
-                <div class="panel-body">
+                <!-- <div class="panel-body"> -->
                     <form method="post" action="/dologin.php">
                         <div class="form-group">
-                            <input class="form-control" type="text" name="userEmail" placeholder="Email" />
+                            <input class="form-control input-lg" type="text" name="userEmail" placeholder="Email Address" />
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="userPass" placeholder="Password" />
+                            <input class="form-control input-lg" type="text" name="userPass" placeholder="Password" />
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-6">
+                                <input type="submit" name="submit" class="btn btn-primary btn-block btn-lg">
+                            </div>
+                        </div>
                     </form>
-                </div>
-            </div>
-        </div>
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
     </div>
 </div>
 <?php
