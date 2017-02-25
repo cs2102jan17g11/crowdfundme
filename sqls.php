@@ -12,7 +12,7 @@ function countAllOnGoingProjects() {
 }
 
 function getProjectNames() {
-    $query = 'SELECT p.project_id, p.title, p.description, u.username, p.img_src FROM projects p, users u WHERE p.creator = u.username';
+    $query = 'SELECT p.project_id, p.title, p.description, u.first_name, p.img_src FROM projects p, users u WHERE p.creator = u.email';
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     while($row = pg_fetch_row($result)) {
@@ -33,11 +33,10 @@ function getProjectNames() {
 }
 
 function isValidUser($username) {
-  $query = "SELECT u.username FROM users u WHERE u.username = '$username'";
+  $query = "SELECT u.email FROM users u WHERE u.email = '$username'";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   $bool = pg_num_rows($result) == 1;
   pg_free_result($result);
-  echo $bool;
   return $bool;
 }
 
