@@ -35,10 +35,6 @@ a {
   color: #F05F40;
 }
 
-p.uppercase {
-    text-transform: uppercase;
-}
-
 .splash {
 
   height: 600px;
@@ -185,20 +181,21 @@ box-shadow: 0 0.2em red;
   position: relative;
   z-index: 2;
   font-weight: bold;
-  color: #F05F40!important;}
+  color: #F05F40!important;
+}
 
-  .navbar-nav.navbar-right .btn {
-    position: relative;
-    z-index: 2;
-    padding: 4px 20px;
-    margin: 10px auto;
-    transition: transform 0.3s; }
+.navbar-nav.navbar-right .btn {
+  position: relative;
+  z-index: 2;
+  padding: 4px 20px;
+  margin: 10px auto;
+  transition: transform 0.3s;
+}
 
+.btn.btn-circle {
+  border-radius: 50px;
+}
 
-    .btn.btn-circle {
-      border-radius: 50px;
-    }
-
-    .btn.btn-outline {
-      background-color: transparent;
-    }
+.btn.btn-outline {
+  background-color: transparent;
+}
