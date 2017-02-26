@@ -69,8 +69,8 @@ function getProjectRewards($projectId){
   pg_free_result($result);
 }
 
-function updateProject($projectId,$title,$description,$blurb){
-  $query = "UPDATE projects SET title = '$title', description = '$description', blurb = '$blurb' WHERE project_id = $projectId;";
+function updateProject($projectId,$title,$description,$img_src){
+  $query = "UPDATE projects SET title = '$title', description = '$description', img_src = '$img_src' WHERE project_id = $projectId;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   echo '<script>location.replace("projectdetails.php?project=' . $projectId . '");</script>';
   pg_free_result($result);
@@ -80,7 +80,7 @@ function checkDeleteProject($projectId){
   $query = "SELECT EXISTS(SELECT 1 FROM projects WHERE project_id=$projectId AND raised>0);";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   $row = pg_fetch_array($result);
-  if($row[0]==t){
+  if($row[0] == true){
     echo "You can't remove a project which has been bidded!";
   }else{
     deleteProject($projectId);
