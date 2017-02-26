@@ -1,2 +1,5 @@
 # env settings
 env.php
+
+# mac temporary files
+.DS_Store
