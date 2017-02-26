@@ -1,75 +1,94 @@
 body {
-    background-color: #f3f3f3;
-    padding-top: 5em;
-    position: relative;
-    margin: 0;
-    padding-bottom: 12rem;
-    min-height: 100%;
+  background-color: #f3f3f3;
+  padding-top: 5em;
+  position: relative;
+  margin: 0;
+  padding-bottom: 12rem;
+  min-height: 100%;
+}
+
+hr {
+   display: block;
+   position: relative;
+   padding: 0;
+   margin: 8px auto;
+   height: 0;
+   width: 100%;
+   max-height: 0;
+   font-size: 1px;
+   line-height: 0;
+   clear: both;
+   border: none;
+   border-top: 1px solid #aaaaaa;
+   border-bottom: 1px solid #ffffff;
 }
 
 .index-body{
-    padding-top: 0!important;
-    position: relative;
-    margin: 0;
-    padding-bottom: 12rem;
-    min-height: 100%;
+  padding-top: 0!important;
+  position: relative;
+  margin: 0;
+  padding-bottom: 12rem;
+  min-height: 100%;
 }
 
 a {
-    color: #F05F40;
+  color: #F05F40;
 }
 
+p.uppercase {
+    text-transform: uppercase;
+}
 
 .splash {
 
-    height: 600px;
-    background-image: url("/img/pexels-photo-132924.jpeg");
-    background-position: center;
-    background-size: cover;
+  height: 600px;
+  background-image: url("/img/pexels-photo-132924.jpeg");
+  background-position: center;
+  background-size: cover;
 
 
 }
 
 .splash-opacity{
-    height: 600px;
-    background-position: center;
-    background-size: cover;
+  height: 600px;
+  background-position: center;
+  background-size: cover;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .splash h1 {
-    text-align: center;
-    color: white;
+  text-align: center;
+  color: white;
 }
 
 .splash h4 {
-    text-align: center;
-    color: white;
-    line-height: 150%;
+  text-align: center;
+  color: white;
+  line-height: 150%;
 }
 
 .half-rule {
-    margin: auto;
-    text-align: center;
-    border: none;
-    height: 4px;
-    background-color: #ffffff;
-    width: 10%;
+  margin: auto;
+  text-align: center;
+  border: none;
+  height: 4px;
+  background-color: #ffffff;
+  width: 10%;
 }
 
 .footer{
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 6rem;
-    text-align: center;
-    background-color: #f3f3f3;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 6rem;
+  text-align: center;
+  background-color: #f3f3f3;
 
 }
 
@@ -123,63 +142,63 @@ box-shadow: 0 0.2em red;
 }*/
 
 .red {
-    color: #F05F40;;
+  color: #F05F40;;
 }
 
 .jumbotron {
-    background-color: transparent; /* removing default color */
+  background-color: transparent; /* removing default color */
 }
 
 
 .btn-primary {
-    /*background-color: red;
-    border-color: #a94442;*/
-    padding: 20px;
+  /*background-color: red;
+  border-color: #a94442;*/
+  padding: 20px;
 }
 
 .box-padding{
-    padding: 20px;
+  padding: 20px;
 }
 
 .content-padding{
-    padding: 1px 30px;
+  padding: 1px 30px;
 }
 
 .ellipsis {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /*NAVBAR*/
 
 .navbar{
-    /*background-color: #F05F40;
-    border-color: #F05F40;
-    color: white;*/
-    background-color: #ffffff;
-    padding: 10px 0;
+  /*background-color: #F05F40;
+  border-color: #F05F40;
+  color: white;*/
+  background-color: #ffffff;
+  padding: 10px 0;
 }
 
 
 .navbar-brand {
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  color: #F05F40!important;}
+
+  .navbar-nav.navbar-right .btn {
     position: relative;
     z-index: 2;
-    font-weight: bold;
-    color: #F05F40!important;}
-
-    .navbar-nav.navbar-right .btn {
-        position: relative;
-        z-index: 2;
-        padding: 4px 20px;
-        margin: 10px auto;
-        transition: transform 0.3s; }
+    padding: 4px 20px;
+    margin: 10px auto;
+    transition: transform 0.3s; }
 
 
-        .btn.btn-circle {
-            border-radius: 50px;
-        }
+    .btn.btn-circle {
+      border-radius: 50px;
+    }
 
-        .btn.btn-outline {
-            background-color: transparent;
-        }
+    .btn.btn-outline {
+      background-color: transparent;
+    }
