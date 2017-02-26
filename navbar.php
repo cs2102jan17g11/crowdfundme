@@ -30,8 +30,8 @@ function navbar($URL) {
           <?php
             ob_start();
             if(!isset($_SESSION)) { session_start(); }
-            if(isset($_SESSION['username'])) {
-              $user = getFirstName($_SESSION['username']);
+            if(isset($_SESSION['userEmail'])) { //email is being used as user identifier
+              $user = getFirstName($_SESSION['userEmail']);
               echo "<li><a href='#'>Hi, $user</a></li>";
               echo "<li><a class='btn btn-default btn-outline btn-circle collapsed' href='/logout.php'>Logout</a></li>";
             } else {
