@@ -100,12 +100,13 @@ function createProject($title, $creator, $img_src, $description, $start_date, $e
     $goal = intval($goal);
     $raised = intval($raised);
     $params = array($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised);
-    $query = pg_query_params('INSERT INTO Projects VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)', $params);
-    $result = pg_query($query); // or die('Query failed: ' . pg_last_error());
+    $result = pg_query_params('INSERT INTO Projects VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8) RETURNING project_id', $params) or die('Query failed: ' . pg_last_error());;
     if(!$result) {
         echo 'Error in ' . pg_result_error(pg_get_result());
     } else {
+        $data = pg_fetch_row($result)[0];
         pg_free_result($result);
+        return $data;
     }
 }
 

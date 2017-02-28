@@ -17,10 +17,8 @@
     header("Location: /login.php");
   }
 
-  echo isset($_POST['submit']) ? 'true' : 'false';
-  echo var_dump($_POST);
   if(isset($_POST['submit'])) {
-    createProject(
+    $project_id = createProject(
       $_POST['title'],
       $_SESSION['userEmail'],
       $_POST['img_src'],
@@ -30,6 +28,8 @@
       $_POST['goal'],
       $_POST['raised']
     );
+    unset($_POST);
+    header("Location: /projectdetails.php?project=$project_id");
   }
 ?>
 
