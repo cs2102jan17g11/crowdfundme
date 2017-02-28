@@ -25,7 +25,7 @@ if(isset($_SESSION['userEmail'])) {
             unset($_SESSION['referred_from']);
             echo "<script>location.replace('$loc');</script>";
         } else {
-            echo "<script>location.replace('index.html');</script>";
+            echo "<script>location.replace('index.php');</script>";
         }
 
     } else {
