@@ -22,7 +22,7 @@
   if(isset($_POST['submit'])) {
     createProject(
       $_POST['title'],
-      $_SESSION['username'],
+      $_SESSION['userEmail'],
       $_POST['img_src'],
       $_POST['description'],
       $_POST['start_date'],

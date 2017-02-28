@@ -167,4 +167,8 @@ function getUserProjects($email) {
 
     return $result;
 }
+
+function cleanInputString($str) {
+  return htmlspecialchars(strip_tags(trim($str)));
+}
 ?>
