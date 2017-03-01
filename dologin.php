@@ -8,17 +8,17 @@ $dbconn = pg_connect(pg_connect_string)
 ob_start();
 session_start();
 
-if(isset($_SESSION['username'])) {
+if(isset($_SESSION['userEmail'])) {
     echo '<script>location.replace("index.php");</script>';
 } else {
 
-    $name = trim($_POST['username']);
+    $name = trim($_POST['userEmail']);
     $name = strip_tags($name);
     $name = htmlspecialchars($name);
 
     $success = isValidUser($name);
     if($success) {
-        $_SESSION['username'] = $name;
+        $_SESSION['userEmail'] = $name;
 
         if(isset($_SESSION['referred_from'])) {
             $loc = $_SESSION['referred_from'];

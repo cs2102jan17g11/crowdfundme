@@ -3,14 +3,13 @@
     include_once("sqls.php");
     ob_start();
     session_start();
-    if(isset($_SESSION['username'])) {
+    if(isset($_SESSION['userEmail'])) {
 
         $dbconn = pg_connect(pg_connect_string)
             or die('Could not connect: ' . pg_last_error());
-        echo 'Hi, ' . getFirstName($_SESSION['username']) . ' Logging you out.';
         pg_close($dbconn);
 
-        unset($_SESSION['username']);
+        unset($_SESSION['userEmail']);
         session_unset();
         session_destroy();
         header("Refresh: 1; url=/");
