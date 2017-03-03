@@ -37,11 +37,6 @@
         $error = true;
     }
   }
-  // $password = getPassword('luciusrichardson@commodoipsum.co.uk');
-  // echo $password . "<br />";
-  // echo $password == '$2y$10$R75BAJfv1n5GHDs25QP14uW.LkwoRn657U/f1W.WMfSZ5.TPJXNGu' ? 'true' : 'false';
-  // echo password_hash('kStVhCeo', PASSWORD_BCRYPT) . "<br />";
-  // echo password_verify('kStVhCeo', $password) ? 'true' : 'false';
 ?>
 
 <div class="container">
@@ -86,3 +81,4 @@
 pg_close($dbconn);
 ?>
 </html>
+0
