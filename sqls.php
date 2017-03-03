@@ -41,7 +41,7 @@ function isValidUser($username) {
 }
 
 function getProject($projectId){
-  $query = "SELECT * FROM projects p WHERE p.project_id = $projectId";
+  $query = "SELECT * FROM projects p WHERE p.project_id='$projectId'";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
   $data = pg_fetch_row($result);
