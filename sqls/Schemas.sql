@@ -36,7 +36,7 @@ CREATE TABLE Rewards (
 );
 
 CREATE TABLE Fundings (
-  funding_id VARCHAR(50) PRIMARY KEY,
+  funding_id SERIAL PRIMARY KEY,
   funding_datetime TIMESTAMP NOT NULL,
   amount INTEGER NOT NULL,
   email VARCHAR(255) NOT NULL,

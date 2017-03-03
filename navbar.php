@@ -32,7 +32,7 @@ function navbar($URL) {
             if(!isset($_SESSION)) { session_start(); }
             if(isset($_SESSION['userEmail'])) { //email is being used as user identifier
               $user = getFirstName($_SESSION['userEmail']);
-              echo "<li><a href='#'>Hi, $user</a></li>";
+              echo "<li><a href='/profile.php'>Hi, $user</a></li>";
               echo "<li><a class='btn btn-default btn-outline btn-circle collapsed' href='/logout.php'>Logout</a></li>";
             } else {
               echo "<li><a class='btn btn-default btn-outline btn-circle collapsed' href='/login.php'>Login / Sign Up</a></li>";

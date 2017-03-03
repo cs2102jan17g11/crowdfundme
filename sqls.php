@@ -49,43 +49,50 @@ function getProject($projectId){
   return $data;
 }
 
-/*
-function getFirstName($username) {
-  $query = "SELECT u.fullname FROM users u WHERE u.username = '$username'";
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
-  $data = pg_fetch_row($result)[0];
-  pg_free_result($result);
-  return $data;
-}
-
-
-
-
 function getProjectRewards($projectId){
   $query = "SELECT r.reward_id, r.title, r.pledge, r.description, r.quantity FROM rewards r, projects p WHERE r.project_id = p.project_id AND p.project_id='$projectId'";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
   while($row = pg_fetch_row($result)) {
     echo '<div class="col-md-4">';
-    echo '<div class="panel panel-default"> <div class="panel-body" style="padding: 20px; background-color: #C6D5DB;">';
-    echo '<h2>$' . $row[2] . ' or more</h2>';
+    echo '<div class="panel panel-default"> <div class="panel-body" style="padding: 20px;">';
+    echo '<h4 style="color: #F05F40">Pledge $' . $row[2] . ' or more</h4>';
+    echo '<hr>';
+    echo '<div>' . $row[1] . '</div>';
     echo '<br />';
-    echo '<div >' . $row[1] . '</div>';
-    echo '<div class="small">' . $row[3] . '</div>';
-    echo '<br /><br />';
+    echo '<div class="small" style="color:#80809E">' . $row[3] . '</div>';
+    echo '<br />';
+    echo '<div class="small">( ' . $row[4] . ' left of ' . $row[4] . ' )</div>';
     echo '</div></div>';
     echo '</div>';
   }
   pg_free_result($result);
 }
 
-function updateProject($projectId, $title, $description, $blurb){
-  $query = "UPDATE projects SET title = '$title', description = '$description', blurb = '$blurb' WHERE project_id = '$projectId'";
+function updateProject($projectId,$title,$description,$img_src){
+  $query = "UPDATE projects SET title = '$title', description = '$description', img_src = '$img_src' WHERE project_id = $projectId;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  echo '<script>location.replace("projectdetails.php?project=' . $projectId . '");</script>';
   pg_free_result($result);
 }
-*/
+
+function checkDeleteProject($projectId){
+  $query = "SELECT EXISTS(SELECT 1 FROM projects WHERE project_id=$projectId AND raised>0);";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $row = pg_fetch_array($result);
+  if($row[0] == true){
+    echo "You can't remove a project which has been bidded!";
+  }else{
+    deleteProject($projectId);
+  }
+}
+
+function deleteProject($projectId){
+  $query = "DELETE FROM projects where project_id=$projectId";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  echo '<script>location.replace("projects.php");</script>';
+}
+
 
 function createProject($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised) {
     $start_date = $start_date == '' ? NULL : $start_date;
@@ -93,12 +100,13 @@ function createProject($title, $creator, $img_src, $description, $start_date, $e
     $goal = intval($goal);
     $raised = intval($raised);
     $params = array($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised);
-    $query = pg_query_params('INSERT INTO Projects VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)', $params);
-    $result = pg_query($query); // or die('Query failed: ' . pg_last_error());
+    $result = pg_query_params('INSERT INTO Projects VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8) RETURNING project_id', $params) or die('Query failed: ' . pg_last_error());;
     if(!$result) {
         echo 'Error in ' . pg_result_error(pg_get_result());
     } else {
+        $data = pg_fetch_row($result)[0];
         pg_free_result($result);
+        return $data;
     }
 }
 
@@ -159,5 +167,9 @@ function getUserProjects($email) {
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     return $result;
+}
+
+function cleanInputString($str) {
+  return htmlspecialchars(strip_tags(trim($str)));
 }
 ?>
