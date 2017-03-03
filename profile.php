@@ -34,7 +34,7 @@ navbar(URL_INDEX);
         <?php if(pg_num_rows($projects) > 0) {echo pg_num_rows($projects); } else { echo "0"; }?>
     </span> Projects
     <span class="badge">
-        <?php if(pg_num_rows($fundings) > 0) {echo pg_num_rows($fundings); } else { echo "0"; }?>
+        <?php /* if(pg_num_rows($fundings) > 0) {echo pg_num_rows($fundings); } else { echo "0"; } */ ?>
     </span> Fundings
     <br>
 
