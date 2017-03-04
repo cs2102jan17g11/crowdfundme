@@ -129,7 +129,9 @@ function checkAccountExist($email) {
 }
 
 function createUser($email, $first_name, $last_name, $hashedpassword) {
-    $query = "INSERT INTO users (email,first_name,last_name,password,role) VALUES('" . $email . "', '" . $first_name . "', '" . $last_name . "', '" . $hashedpassword . "', 'user')";
+    $query = "INSERT INTO users 
+            (email,first_name,last_name,password,role) 
+            VALUES('" . $email . "', '" . $first_name . "', '" . $last_name . "', '" . $hashedpassword . "', 'user')";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
@@ -143,12 +145,16 @@ function getUser($email) {
 }
 
 function updateProfile($email, $website, $biography) {
-    $query = "UPDATE users SET website = '" . $website . "', biography = '" . $biography . "' WHERE email = '" . $email . "'";
+    $query = "UPDATE users 
+            SET website = '" . $website . "', biography = '" . $biography . "' 
+            WHERE email = '" . $email . "'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
 function isValidPassword($email, $password) {
-    $query = "SELECT u.password FROM users u WHERE u.email = '". $email . "'";
+    $query = "SELECT u.password 
+              FROM users u 
+              WHERE u.email = '". $email . "'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     $data = pg_fetch_row($result)[0];
@@ -158,12 +164,29 @@ function isValidPassword($email, $password) {
 }
 
 function updatePassword($email, $password) {
-    $query = "UPDATE users SET password = '" . $password. "' WHERE email = '" . $email . "'";
+    $query = "UPDATE users 
+              SET password = '" . $password . "' 
+              WHERE email = '" . $email . "'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
 function getUserProjects($email) {
-    $query = "SELECT title, img_src, start_date, end_date, goal, raised FROM projects p WHERE p.creator = '" . $email . "' ORDER BY end_date DESC";
+    $query = "SELECT p.project_id, p.title, p.start_date, p.end_date, p.goal, p.raised 
+              FROM projects p 
+              WHERE p.creator = '" . $email . "' 
+              ORDER BY p.end_date DESC";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+    return $result;
+}
+
+function getUserFundings($email) {
+    $query = "SELECT p.project_id, p.title, f.funding_datetime, f.amount, r.title
+              FROM fundings f, rewards r, projects p
+              WHERE r.reward_id = f.reward_id 
+              AND p.project_id = r.project_id
+              AND f.email = '" . $email . "' 
+              ORDER BY f.funding_datetime DESC";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     return $result;

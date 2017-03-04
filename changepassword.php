@@ -26,6 +26,8 @@ if(isset($_POST['submit'])) {
         $error[] = 'Current password is empty.';
     } else if((isValidPassword($_SESSION['userEmail'], $current_password)) != true) {
         $error[] = 'Current password is incorrect.';
+    } else if ($current_password == $new_password && $current_password == $new_passwordconfirm) {
+        $error[] = 'New and current passwords cannot be the same.';
     }
 
     if($new_password == ""){
@@ -37,9 +39,8 @@ if(isset($_POST['submit'])) {
     }
 
     if (!isset($error)) {
-        $hashedpassword = password_hash($password, PASSWORD_BCRYPT);
-        updatePassword($email, $hashedpassword);
-
+        $hashedpassword = password_hash($new_password, PASSWORD_BCRYPT);
+        updatePassword($_SESSION['userEmail'], $hashedpassword);
         header("location: profile.php");
     }
 }

@@ -25,16 +25,18 @@ navbar(URL_INDEX);
     <?php
         $user = getUser($_SESSION['userEmail']);
         $projects = getUserProjects($_SESSION['userEmail']);
+        $fundings = getUserFundings($_SESSION['userEmail']);
     ?>
 
-    <h4>
+    <h3>
         <b><?php echo $user[0] ?> <?php echo $user[1] ?> </b>
-    </h4>
+    </h3>
+
     <span class="badge">
         <?php if(pg_num_rows($projects) > 0) {echo pg_num_rows($projects); } else { echo "0"; }?>
     </span> Projects
     <span class="badge">
-        <?php /* if(pg_num_rows($fundings) > 0) {echo pg_num_rows($fundings); } else { echo "0"; } */ ?>
+        <?php if(pg_num_rows($fundings) > 0) {echo pg_num_rows($fundings); } else { echo "0"; }  ?>
     </span> Fundings
     <br>
 
@@ -47,11 +49,11 @@ navbar(URL_INDEX);
     <?php }
     ?>
 <br>
-        <form role="form" method="get" action="/updateprofile.php" autocomplete="off">
+        <form role="form" method="post" action="/updateprofile.php" autocomplete="off">
             <input type="submit" name="submit" value="Update Profile" class="btn btn-primary">
         </form>
 
-        <form role="form" method="get" action="/changepassword.php" autocomplete="off">
+        <form role="form" method="post" action="/changepassword.php" autocomplete="off">
             <input type="submit" name="submit" value="Change Password" class="btn btn-primary">
         </form>
 
@@ -59,13 +61,12 @@ navbar(URL_INDEX);
 
     <br>
 
-        <h4><b>Projects</b></h4>
     <?php if(pg_num_rows($projects) > 0) { ?>
+        <h4><b>Projects</b></h4>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Title</th>
-            <th>Blurb</th>
+            <th>Project</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Goal</th>
@@ -76,46 +77,43 @@ navbar(URL_INDEX);
             <?php
             while ($row = pg_fetch_row($projects)) { ?>
         <tr>
-            <td><a href=""><?php echo $row[0] ?></a></td>
-                <td><?php echo $row[1] ?></td>
-                <td><?php echo $row[2] ?></td>
-                <td><?php echo $row[3] ?></td>
-                <td><?php echo $row[4] ?></td>
-                <td><?php echo $row[5] ?></td>
+            <td><a href="projectdetails.php?project=<?php echo $row[0] ?>"><?php echo $row[1] ?></a></td>
+                <td><?php echo date('d M Y', strtotime($row[2])) ?></td>
+                <td><?php echo date('d M Y', strtotime($row[3])) ?></td>
+                <td>$ <?php echo number_format($row[4],0, '.', ',') ?></td>
+                <td>$ <?php echo number_format($row[5],0, '.', ',') ?></td>
         </tr>
             <?php }
             ?>
         </tbody>
     </table>
-    <?php } else { ?>
-        There are no projects.
     <?php } ?>
 
-        <h4><b>Fundings</b></h4>
     <?php if(pg_num_rows($fundings) > 0) { ?>
+        <h4><b>Fundings</b></h4>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Project</th>
+                <th>Funding Date</th>
                 <th>Amount</th>
-                <th>Date/th>
+                <th>Reward</th>
             </tr>
             </thead>
             <tbody>
             <?php
             while ($row = pg_fetch_row($fundings)) { ?>
                 <tr>
-                    <td><a href=""><?php echo $row[0] ?></a></td>
-                    <td><?php echo $row[1] ?></td>
-                    <td><?php echo $row[2] ?></td>
+                    <td><a href="projectdetails.php?project=<?php echo $row[0] ?>"><?php echo $row[1] ?></a></td>
+                    <td><?php echo date('d M Y', strtotime($row[2])) ?></td>
+                    <td>$ <?php echo number_format($row[3],0, '.', ',') ?></td>
+                    <td><?php echo $row[4] ?></td>
                 </tr>
             <?php }
             ?>
             </tbody>
         </table>
-    <?php } else { ?>
-        There are no fundings.
-    <?php } ?>
+    <?php }  ?>
 </div>
 
 <?php
