@@ -198,6 +198,20 @@ function selectReward($project_id, $time, $pledge, $email, $reward_id) {
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
+function getProjectBackers($project_id) {
+    $query = "SELECT COUNT(*)
+              FROM fundings f, rewards r, projects p
+              WHERE r.reward_id = f.reward_id 
+              AND p.project_id = r.project_id
+              AND p.project_id = '" . $project_id . "' 
+              GROUP BY p.project_id";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+    $data = pg_fetch_row($result);
+    pg_free_result($result);
+    return $data;
+}
+
 function cleanInputString($str) {
   return htmlspecialchars(strip_tags(trim($str)));
 }

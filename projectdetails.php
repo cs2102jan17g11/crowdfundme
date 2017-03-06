@@ -19,7 +19,7 @@
   navbar(URL_PROJECTS_VIEW);
 
   $project = getProject($_GET['project']);
-
+  $projectBackers = getProjectBackers($_GET['project']);
 
   ?>
 
@@ -52,7 +52,7 @@
               <div>pledged of $<?php echo $project[7] ?> goal</div>
 
 
-              <div><h3>0</h3></div>
+              <div><h3><?php echo $projectBackers[0] ?></h3></div>
               <div>backers</div>
 
 
