@@ -20,6 +20,7 @@
 
   $project = getProject($_GET['project']);
 
+
   ?>
 
   <div class="container">
@@ -65,7 +66,7 @@
           </div>
         </div>
 
-        <form method="post" action="/dologin.php">
+        <form method="post" action="fund.php?project=<?php echo $project[0] ?>">
           <button class="btn btn-primary btn-lg btn-block">Fund this project</button>
         </form>
 

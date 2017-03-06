@@ -50,23 +50,13 @@ function getProject($projectId){
 }
 
 function getProjectRewards($projectId){
-  $query = "SELECT r.reward_id, r.title, r.pledge, r.description, r.quantity FROM rewards r, projects p WHERE r.project_id = p.project_id AND p.project_id='$projectId'";
+  $query = "SELECT r.reward_id, r.title, r.pledge, r.description, r.quantity 
+            FROM rewards r, projects p 
+            WHERE r.project_id = p.project_id 
+            AND p.project_id='$projectId'
+            ORDER BY r.quantity DESC";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
-  while($row = pg_fetch_row($result)) {
-    echo '<div class="col-md-4">';
-    echo '<div class="panel panel-default"> <div class="panel-body" style="padding: 20px;">';
-    echo '<h4 style="color: #F05F40">Pledge $' . $row[2] . ' or more</h4>';
-    echo '<hr>';
-    echo '<div>' . $row[1] . '</div>';
-    echo '<br />';
-    echo '<div class="small" style="color:#80809E">' . $row[3] . '</div>';
-    echo '<br />';
-    echo '<div class="small">( ' . $row[4] . ' left of ' . $row[4] . ' )</div>';
-    echo '</div></div>';
-    echo '</div>';
-  }
-  pg_free_result($result);
+  return $result;
 }
 
 function updateProject($projectId,$title,$description,$img_src){
@@ -190,6 +180,22 @@ function getUserFundings($email) {
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     return $result;
+}
+
+function selectReward($project_id, $time, $pledge, $email, $reward_id) {
+    $query = "UPDATE rewards 
+              SET quantity = (quantity - 1) 
+              WHERE reward_id = '" . $reward_id . "'";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+    $query = "UPDATE projects
+              SET raised = (raised + $pledge) 
+              WHERE project_id = '" . $project_id . "'";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+    $query = "INSERT INTO fundings
+            VALUES(DEFAULT, '" . $time . "', '" . $pledge . "', '" . $email . "', '" . $reward_id . "')";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
 function cleanInputString($str) {

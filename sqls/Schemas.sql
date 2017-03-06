@@ -4,14 +4,10 @@ CREATE TABLE Users (
   last_name VARCHAR(50) NOT NULL,
   password VARCHAR(255) NOT NULL,
   website VARCHAR(255),
-  biography VARCHAR(300),
+  biography TEXT,
   role VARCHAR(5) CHECK (role = 'user' OR role = 'admin')
 );
 
--- INSERT INTO Users (email, first_name, last_name, password, role)
--- VALUES ('admin@admin.com', 'Admin', 'Admin', '$2y$10$/MV3fWHlSCzfqZAHD6ky7eCINm072KknluyL0.cR6R/bqOKwcWs0G', 'admin');
-
-/* Projects and funding schemas below are for testing of profile only*/
 CREATE TABLE Projects (
   project_id SERIAL PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
