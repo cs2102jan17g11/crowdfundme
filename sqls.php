@@ -118,10 +118,10 @@ function checkAccountExist($email) {
     return $data;
 }
 
-function createUser($email, $first_name, $last_name, $hashedpassword) {
+function createUser($email, $first_name, $last_name, $hashedpassword, $role) {
     $query = "INSERT INTO users 
             (email,first_name,last_name,password,role) 
-            VALUES('" . $email . "', '" . $first_name . "', '" . $last_name . "', '" . $hashedpassword . "', 'user')";
+            VALUES('" . $email . "', '" . $first_name . "', '" . $last_name . "', '" . $hashedpassword . "', '" . $role . "')";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
@@ -205,6 +205,39 @@ function getProjectBackers($project_id) {
               AND p.project_id = r.project_id
               AND p.project_id = '" . $project_id . "' 
               GROUP BY p.project_id";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+    $data = pg_fetch_row($result);
+    pg_free_result($result);
+    return $data;
+}
+
+function getAllUsers($email, $role) {
+    $query = "SELECT u.first_name, u.last_name, u.email, u.role
+              FROM users u
+              WHERE u.email NOT IN (
+                  SELECT u1.email
+                  FROM users u1 
+                  WHERE u1.email = '". $email . "'
+              )
+              AND u.role = '". $role . "'
+              ORDER BY u.first_name, u.last_name";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+    return $result;
+}
+
+function deleteUser($email) {
+    $query = "DELETE 
+              FROM users u
+              WHERE u.email = '" . $email . "'";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+}
+
+function getUserRole($email) {
+    $query = "SELECT u.role
+              FROM users u
+              WHERE u.email = '" . $email . "'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     $data = pg_fetch_row($result);

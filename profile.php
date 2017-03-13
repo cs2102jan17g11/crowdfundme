@@ -14,8 +14,8 @@
 
 <body>
 <?php
-include_once("navbar.php");
-navbar(URL_INDEX);
+    include_once("navbar.php");
+    navbar(URL_INDEX);
 ?>
 
 <div class="container">
@@ -49,13 +49,8 @@ navbar(URL_INDEX);
     <?php }
     ?>
 <br>
-        <form role="form" method="post" action="/updateprofile.php" autocomplete="off">
-            <input type="submit" name="submit" value="Update Profile" class="btn btn-primary">
-        </form>
-
-        <form role="form" method="post" action="/changepassword.php" autocomplete="off">
-            <input type="submit" name="submit" value="Change Password" class="btn btn-primary">
-        </form>
+        <a href="updateprofile.php" class="btn btn-primary" role="button">Update Profile</a>
+        <a href="changepassword.php" class="btn btn-primary" role="button">Change Password</a>
 
     </center>
 
