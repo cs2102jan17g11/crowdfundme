@@ -1,0 +1,18 @@
+DROP FUNCTION funding_percent(p_id INTEGER) CASCADE;
+
+CREATE FUNCTION funding_percent(p_id INTEGER)
+RETURNS NUMERIC AS $$
+DECLARE funds_count NUMERIC;
+DECLARE funds_total_sum NUMERIC;
+BEGIN
+        SELECT COUNT(*) INTO funds_count
+        FROM fundings f INNER JOIN rewards r ON f.reward_id = r.reward_id
+        WHERE r.project_id = p_id;
+
+        SELECT SUM(r.quantity) INTO funds_total_sum 
+        FROM rewards r 
+        WHERE r.project_id = p_id;
+
+        RETURN funds_count / funds_total_sum;
+END;
+$$  LANGUAGE plpgsql
