@@ -88,6 +88,9 @@ a {
 
 }
 
+.top-picks {
+  margin-top: 3em;
+}
 
 
 /*.navbar {
@@ -198,4 +201,12 @@ box-shadow: 0 0.2em red;
 
 .btn.btn-outline {
   background-color: transparent;
+}
+
+.carousel-indicators li {
+  border: 1px solid #F05F40;
+}
+
+.carousel-indicators .active {
+  background-color: #F05F40;
 }
