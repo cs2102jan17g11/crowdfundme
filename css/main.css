@@ -210,3 +210,11 @@ box-shadow: 0 0.2em red;
 .carousel-indicators .active {
   background-color: #F05F40;
 }
+
+.carousel-control {
+  color: #F05F40;
+}
+
+.carousel-control:focus, .carousel-control:hover {
+  color: #F05F40;
+}

@@ -25,10 +25,15 @@ function carouselHtml($project_id) {
   $data = pg_fetch_row($result);
 
   echo '<div class="row">
-          <div class="col-xs-6"><img src="' . $data[2] .'" style="max-width: 100%">
+          <div class="col-xs-6">
+            <a href="projectdetails.php?project=' . $project_id . '">
+              <img src="' . $data[2] .'" style="max-width: 100%">
+            </a>
           </div>
           <div class="col-xs-6">
-            <h3>' . $data[0] .'</h3>
+            <a href="projectdetails.php?project=' . $project_id . '">
+              <h3>' . $data[0] .'</h3>
+            </a>  
             <p>' . $data[3] . '</p>
           </div>
         </div>';
