@@ -85,6 +85,39 @@
     </div>
   </div>
   </div>
+  <hr />
+
+  <div class="container">
+  <div class="col-md-12">
+
+    <h1>Our Popular Picks</h1>
+
+    <div class="col-md-4">
+      <img src="https://s3-ap-southeast-1.amazonaws.com/cs2102jan17g11-crowdfundme/Malty+the+bear.png" style="max-width:100%;">
+      <div class="panel panel-default">
+        <div class="panel-body" style="padding: 0 20px">
+          <h3>
+            <a href="projectdetails.php?project=2">Malty the Bear</a>
+          </h3>
+          <div>by <a>Lucius</a>
+          </div>
+          <br>
+          <br>
+          <div class="small ellipsis">
+            Artisanal Hot Cocoa blend inspired by malt shakes from the 1960s. Comes in adorable glass honey bears. Handcrafted in Brooklyn.
+          </div>
+          <br>
+          <br>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
   <?php
   include("footer.php");
   pg_close($dbconn);
