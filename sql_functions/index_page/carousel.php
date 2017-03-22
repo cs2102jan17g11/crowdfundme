@@ -52,7 +52,7 @@ function carouselHtml($project_id) {
             <a href="projectdetails.php?project=' . $project_id . '">
               <h3>' . $data[0] .'</h3>
             </a>  
-            <p>' . $data[3] . '</p>
+            <p style="height: 10rem;">' . $data[3] . '</p>
           </div>
         </div>';
   pg_free_result($result);

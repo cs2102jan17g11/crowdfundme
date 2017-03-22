@@ -2,17 +2,44 @@ DROP FUNCTION funding_percent(p_id INTEGER) CASCADE;
 
 CREATE FUNCTION funding_percent(p_id INTEGER)
 RETURNS NUMERIC AS $$
+-- variable used
 DECLARE funds_count NUMERIC;
 DECLARE funds_total_sum NUMERIC;
+-- 
 BEGIN
-        SELECT COUNT(*) INTO funds_count
-        FROM fundings f INNER JOIN rewards r ON f.reward_id = r.reward_id
-        WHERE r.project_id = p_id;
+    SELECT COUNT(*) INTO funds_count
+    FROM fundings f INNER JOIN rewards r ON f.reward_id = r.reward_id
+    WHERE r.project_id = p_id;
 
-        SELECT SUM(r.quantity) INTO funds_total_sum 
-        FROM rewards r 
-        WHERE r.project_id = p_id;
+    SELECT SUM(r.quantity) INTO funds_total_sum 
+    FROM rewards r 
+    WHERE r.project_id = p_id;
 
-        RETURN funds_count / funds_total_sum;
+    RETURN funds_count / funds_total_sum;
 END;
-$$  LANGUAGE plpgsql
+$$  LANGUAGE plpgsql;
+
+
+DROP FUNCTION project_progress(p_id INTEGER) CASCADE;
+
+CREATE FUNCTION project_progress(p_id INTEGER)
+RETURNS NUMERIC AS $$
+-- 
+DECLARE goal NUMERIC;
+DECLARE raised NUMERIC;
+DECLARE progress_percent NUMERIC;
+
+BEGIN
+    SELECT p.goal INTO goal
+    FROM projects p
+    WHERE p.project_id = p_id;
+
+    SELECT p.raised into raised
+    FROM projects p
+    WHERE p.project_id = p_id;
+
+    progress_percent = raised / goal;
+    -- should not return more than 100%
+    RETURN LEAST(progress_percent, 1.0); 
+END;
+$$ LANGUAGE plpgsql;
