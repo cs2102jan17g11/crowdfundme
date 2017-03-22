@@ -217,3 +217,23 @@ box-shadow: 0 0.2em red;
 .carousel-control:focus, .carousel-control:hover {
   color: #F05F40;
 }
+
+.card-content {
+  height: 240px;
+}
+
+.card .progress {
+  height: 5px;
+}
+
+.card .progress-bar {
+  background-color: #F05F40;
+}
+
+.card .panel-footer {
+  background-color: transparent;
+}
+
+.panel-footer .table {
+  margin-bottom: 0px;
+}
