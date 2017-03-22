@@ -234,6 +234,6 @@ box-shadow: 0 0.2em red;
   background-color: transparent;
 }
 
-.panel-footer .table {
+.card .panel-footer .table {
   margin-bottom: 0px;
 }
