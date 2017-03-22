@@ -17,7 +17,7 @@ CREATE TABLE Projects (
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   goal INTEGER NOT NULL CONSTRAINT positive_goal CHECK(goal > 0),
-  raised INTEGER DEFAULT 0 CONSTRAINT raised_smaller_than_goal CHECK(raised < goal),
+  raised INTEGER DEFAULT 0,
   CONSTRAINT start_date_before_end_date CHECK(start_date <= end_date)
 );
 
