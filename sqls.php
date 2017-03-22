@@ -1,4 +1,7 @@
 <?php
+
+include_once("sql_functions/shared_html_rendering.php");
+
 function countAllProjects() {
   $query = 'SELECT count(*) FROM projects';
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
@@ -12,22 +15,13 @@ function countAllOnGoingProjects() {
 }
 
 function getProjectNames() {
-    $query = 'SELECT p.project_id, p.title, p.description, u.first_name, p.img_src FROM projects p, users u WHERE p.creator = u.email';
+    $query = '
+      SELECT p.project_id
+      FROM projects p';
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     while($row = pg_fetch_row($result)) {
-        echo '<div class="col-md-4">';
-        echo '<img src="' .$row[4] . '" style="max-width:100%;" />';
-        echo '<div class="panel panel-default"> <div class="panel-body" style="padding: 0 20px">';
-        echo '<h3><a href="projectdetails.php?project=' . $row[0] . '">' . $row[1] . '</a></h3>';
-        echo '<div>by <a>' . $row[3] . '</a></div>';
-        echo '<br /><br />';
-        echo '<div class="small ellipsis">' . $row[2] . '</div>';
-        echo '<br /><br />';
-        echo '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:' . 70 . '%"></div></div>';
-        echo '<br />';
-        echo '</div></div>';
-        echo '</div>';
+        cardHtml($row[0]);
     }
     pg_free_result($result);
 }
