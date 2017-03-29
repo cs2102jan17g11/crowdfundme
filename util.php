@@ -9,9 +9,7 @@
         if($diff > 0){
             return $diff;
         }
-        else{
-            return 0;
-        }
+        return 0;
     }
 
 ?>

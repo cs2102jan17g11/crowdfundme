@@ -1,5 +1,5 @@
 <?php
-include_once("util.php");
+include_once("../util.php");
 
 function cardHtml($project_id) {
   $result = pg_query_params('
