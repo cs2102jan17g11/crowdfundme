@@ -46,7 +46,7 @@
 
                 <div class="form-group">
                   <label for="inputImageUrl">Project Image :</label>
-                  <input type="file" hidden id="inputImageUrl" name="imageUrl">
+                  <input type="file" hidden id="inputImageUrl" name="imageUrl" value="<?php echo $project[3] ?>">
                 </br>
                 <img src="<?php echo $project[3] ?>" width=auto height=auto/>
               </div>

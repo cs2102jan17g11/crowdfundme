@@ -54,6 +54,11 @@ function getProjectRewards($projectId){
 }
 
 function updateProject($projectId,$title,$description,$img_src){
+  if (empty($img_src)) {
+    $project = getProject($projectId);
+    $img_src = $project[3];
+  }
+
   $query = "UPDATE projects SET title = '$title', description = '$description', img_src = '$img_src' WHERE project_id = $projectId;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   echo '<script>location.replace("projectdetails.php?project=' . $projectId . '");</script>';
