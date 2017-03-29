@@ -236,7 +236,7 @@ function getUserRole($email) {
 
     $data = pg_fetch_row($result);
     pg_free_result($result);
-    return $data;
+    return $data[0];
 }
 
 function cleanInputString($str) {

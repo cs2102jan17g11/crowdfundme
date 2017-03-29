@@ -32,7 +32,7 @@ if(!isset($_SESSION)) { session_start(); } ?>
               <li>
                   <a href="/about.php">About</a>
               </li>
-              <?php if($_SESSION['userRole'] == 'admin') { ?>
+              <?php if(isset($_SESSION['userRole']) && $_SESSION['userRole'] == 'admin') { ?>
                   <li <?php echo ($URL == URL_VIEW_USERS) ? 'class="active"': ""; ?>" >
                   <a href="viewallusers.php">View Users</a>
                   </li>
@@ -50,6 +50,7 @@ if(!isset($_SESSION)) { session_start(); } ?>
               echo "<li><a href='/profile.php'>Hi, $user</a></li>";
               echo "<li><a class='btn btn-default btn-outline btn-circle collapsed' href='/logout.php'>Logout</a></li>";
             } else {
+              echo "<li><a href='/register.php'>Register</a></li>";
               echo "<li><a class='btn btn-default btn-outline btn-circle collapsed' href='/login.php'>Login / Sign Up</a></li>";
             }
           ?>

@@ -10,6 +10,7 @@
         pg_close($dbconn);
 
         unset($_SESSION['userEmail']);
+        unset($_SESSION['userRole']);
         session_unset();
         session_destroy();
         header("Refresh: 1; url=/");
