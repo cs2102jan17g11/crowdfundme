@@ -25,6 +25,7 @@
 
     if($success) {
         $_SESSION['userEmail'] = $userEmail;
+        $_SESSION['userRole'] = getUserRole($userEmail);
 
         if(isset($_SESSION['referred_from'])) {
             $loc = $_SESSION['referred_from'];

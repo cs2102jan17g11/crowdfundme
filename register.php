@@ -53,9 +53,10 @@
         if (!isset($error)) {
             $hashedpassword = password_hash($password, PASSWORD_BCRYPT);
 
-            createUser($email, $first_name, $last_name, $hashedpassword);
+            createUser($email, $first_name, $last_name, $hashedpassword, 'user');
 
             $_SESSION['userEmail'] = $email;
+            $_SESSION['userRole'] = 'user';
             header("location: profile.php");
         }
     }
@@ -67,7 +68,7 @@
     <?php
         if(isset($error)){ ?>
             <div class="alert alert-danger">
-            <strong>Unable to register due to the follow reason(s):</strong>
+            <strong>Unable to register due to the follow reason(s):</strong><br>
                 <?php
             foreach($error as $error){
                 echo $error.'<br>';

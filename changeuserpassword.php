@@ -9,13 +9,13 @@
     include_once("sqls.php");
     ?>
 
-    <title>Change Password</title>
+    <title>Change User Password</title>
 </head>
 
 <body>
 <?php
 include_once("navbar.php");
-navbar(URL_INDEX);
+navbar(URL_VIEW_USERS);
 
 if(isset($_POST['submit'])) {
     $current_password = pg_escape_string($_POST['current_password']);
@@ -24,7 +24,7 @@ if(isset($_POST['submit'])) {
 
     if($current_password == ""){
         $error[] = 'Current password is empty.';
-    } else if((isValidPassword($_SESSION['userEmail'], $current_password)) != true) {
+    } else if((isValidPassword($_GET['email'], $current_password)) != true) {
         $error[] = 'Current password is incorrect.';
     } else if ($current_password == $new_password && $current_password == $new_passwordconfirm) {
         $error[] = 'New and current passwords cannot be the same.';
@@ -40,25 +40,25 @@ if(isset($_POST['submit'])) {
 
     if (!isset($error)) {
         $hashedpassword = password_hash($new_password, PASSWORD_BCRYPT);
-        updatePassword($_SESSION['userEmail'], $hashedpassword);
-        header("location: profile.php");
+        updatePassword($_GET['email'], $hashedpassword);
+        header("location: viewuser.php?email=" . $_GET['email']);
     }
 }
 ?>
 
 <div class="container">
-    <h1>Change Password</h1>
+    <h1>Change User Password</h1>
 
     <?php
     if(isset($error)){
-    ?>
-    <div class="alert alert-danger">
-        <strong>Unable to change password due to the follow reason(s):</strong>
-        <?php
-        foreach($error as $error){
-            echo '<p class="bg-danger">'.$error.'</p>';
-        }?>
-    </div>
+        ?>
+        <div class="alert alert-danger">
+            <strong>Unable to change user password due to the follow reason(s):</strong>
+            <?php
+            foreach($error as $error){
+                echo '<p class="bg-danger">'.$error.'</p>';
+            }?>
+        </div>
         <?php
     }
     ?>
