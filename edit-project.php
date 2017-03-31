@@ -17,11 +17,7 @@
   navbar(URL_PROJECTS_VIEW);
   $project = getProject($_GET['project']);
   $rewards = getProjectRewards($_GET['project']);
-  //$mydate = date_default_timezone_get('Australia/Melbourne');
-  $now = new \DateTime('now');
-  $month = $now->format('m');
-  $year = $now->format('Y');
-  $currentMonth = date("n",strtotime($mydate));
+
   if(isset($_POST['formUpdate'])) {
     $title = pg_escape_string($_POST['title']);
     $description = pg_escape_string($_POST['description']);
@@ -37,7 +33,7 @@
 
     if (!isset($error)) {
       updateProject($project[0], $title, $description, $blurb);
-      header("location: projectdetails.php?project=$project[0]");
+      header("location: profile.php");
     }
   }else if(isset($_POST['formDelete'])){
     $variable = checkDeleteProject($project[0]);
