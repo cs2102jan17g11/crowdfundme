@@ -3,3 +3,7 @@ env.php
 
 # mac temporary files
 .DS_Store
+
+#generated chart image
+img/funding-barchart.png
+img/funding-linechart.png
