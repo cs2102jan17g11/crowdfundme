@@ -61,37 +61,56 @@ if(isset($_POST['submit'])) {
     } ?>
 
     <?php
-    while($row = pg_fetch_row($projectRewards)) { ?>
+    while($row = pg_fetch_row($projectRewards)) { 
+        $rewards_title = $row[1];
+        $rewards_pledge_amount = $row[2];
+        $rewards_description = $row[3];
+        $rewards_quantity = $row[4];
+    ?>
     <form role="form" method="post" action="fund.php?project=<?php echo $project[0] ?>" autocomplete="off">
         <input type="hidden" name="reward_id" value="<?php echo $row[0]?>">
     <div class="panel panel-default" style="max-height: 100%" >
-        <div class="panel-body" >
-                <?php if($row[1] != "Make a pledge without a reward") { ?>
-                    <h3><b>$ <?php echo $row[2]?></b></h3>
-                    <input type="hidden" name="pledge" value="<?php echo $row[2]?>">
+        <div class="panel-body">
+            <div class="content-padding">
+                <h2><?php echo $rewards_title; ?></h2>
+                <?php if($rewards_pledge_amount > 0) { ?>
+                    <h3><b>$ <?php echo $rewards_pledge_amount; ?></b></h3>
+                    <input type="hidden" name="pledge"
+                        value="<?php echo $rewards_pledge_amount; ?>">
                     <input type="hidden" name="reward_type" value="reward">
                 <?php } else { ?>
                     <input type="hidden" name="reward_type" value="noreward">
                 <?php } ?>
-                <h3><?php echo $row[1]?></h3>
-                <?php echo $row[3]?> <br>
-                <?php if($row[4] != "0") { ?>
-                    Only <?php echo $row[4]?> left<br>
-                <?php if($row[1] == "Make a pledge without a reward") { ?>
+                
+                <?php echo $rewards_description; ?>
+
+                <br>
+                
+                
+                <?php if($rewards_pledge_amount ==  0) { ?> 
+                    <!-- Case for 0 dollar pledges -->
+                    <br>
+                    <div style="width:20%">
+                        <input type="number" name="pledge" id="pledge"  class="form-control" placeholder="Pledge amount">
+                    </div>
+                    <br>
+                    <input type="submit" name="submit" value="Make Pledge" class="btn btn-primary">
+                <?php } else { ?> 
+                    <!-- Case for > 0 dollar pledges -->
+                    <?php if($rewards_quantity != 0) { ?>
+                        <!-- Case where there still more quantity left -->
+                        Only <?php echo $rewards_quantity; ?> left
                         <br>
-                        <div class="form-group">
-                            <div class="col-xs-2">
-                                <input type="text" name="pledge" id="pledge"  class="form-control" placeholder="pledge amount">
-                            </div>
-                        </div>
                         <br>
-                        <br><input type="submit" name="submit" value="Make Pledge" class="btn btn-primary">
-                    <?php }  else { ?>
-                    <br><input type="submit" name="submit" value="Select Reward and Pledge" class="btn btn-primary">
+                        <input type="submit" name="submit" value="Select Reward and Pledge" class="btn btn-primary">
+                    <?php } else {?>
+                        <!-- Case where there still no more left -->
+                        <span class="label label-default">Reward no longer available</span>
                     <?php } ?>
-                <?php } else {?>
-                    <br><span class="label label-default">Reward no longer available</span>
                 <?php } ?>
+                <br />
+                <br />
+            </div>
         </div>
     </div>
     </form>

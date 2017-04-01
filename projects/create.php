@@ -100,6 +100,7 @@
         <button type="submit" name='submit' class="btn btn-primary">Start my project!</button>
       </form>
     </div>
+    <br />
 </div>
 <?php
   include("../footer.php");

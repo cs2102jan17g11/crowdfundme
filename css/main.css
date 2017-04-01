@@ -152,11 +152,18 @@ box-shadow: 0 0.2em red;
 
 
 .btn-primary {
-  /*background-color: red;
-  border-color: #a94442;*/
-  padding: 20px;
+  background-color: transparent;
+  border-color: #F05F40;
+  color: #F05F40;
+  transition: all 0.3s;
 }
 
+.btn-primary:hover {
+  color: white; 
+  background-color: #F05F40;
+  border-color: #F05F40;
+  transition: all 0.3s;
+}
 .box-padding{
   padding: 20px;
 }
@@ -230,7 +237,7 @@ box-shadow: 0 0.2em red;
   height: 5px;
 }
 
-.card .progress-bar {
+.progress-bar {
   background-color: #F05F40;
 }
 
