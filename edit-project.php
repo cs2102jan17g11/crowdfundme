@@ -110,7 +110,11 @@
         </div>
 
       </div>
-      <div>
+      <div class="col-sm-12 col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <b>Edit Rewards</b>
+        </div>
         <div class="panel-body">
           <table class="table table-striped">
             <thead>
@@ -142,11 +146,13 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                  </td>
+                  </tr>
                   <?php }?>
                 </tbody>
               </table>
+              <a href="create_rewards.php?project=<?php echo $project[0]; ?>" class="btn btn-success">Create rewards</a>
             </div>
+          </div>
           </div>
           <div class="col-sm-12 col-md-12">
             <button type="submit" class="btn btn-success" name="formUpdate">Update</button>
