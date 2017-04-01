@@ -151,6 +151,7 @@
                 </tbody>
               </table>
               <a href="create_rewards.php?project=<?php echo $project[0]; ?>" class="btn btn-success">Create rewards</a>
+              <a href="create_rewards.php?project=<?php echo $project[0]; ?>" class="btn btn-success">Create default reward</a>
             </div>
           </div>
           </div>

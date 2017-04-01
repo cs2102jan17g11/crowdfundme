@@ -33,6 +33,10 @@ a {
   color: #F05F40;
 }
 
+.splash.create {
+  background-image: url("/img/pexels-photo-132986.jpeg");
+}
+
 .splash {
 
   height: 600px;

@@ -23,10 +23,9 @@
 
   <div class="splash">
     <div class="splash-opacity">
-
+      <div class="container">
       <div class="row">
-
-        <div class="col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-7">
+        <div class="col-md-4 pull-right">
           <br  />
           <h1>Explore the greatest projects, ever.</h1>
           <br /><br />
@@ -37,6 +36,7 @@
             To date, We have over <span class="red"><?php echo countAllProjects() ?></span> projects, click on explore to see them.
           </h4>
         </div>
+      </div>
       </div>
     </div>
   </div>
