@@ -1,4 +1,7 @@
 <?php
+
+include_once("sql_functions/shared_html_rendering.php");
+
 function countAllProjects() {
   $query = 'SELECT count(*) FROM projects';
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
@@ -12,24 +15,15 @@ function countAllOnGoingProjects() {
 }
 
 function getProjectNames() {
-    $query = 'SELECT p.project_id, p.title, p.description, u.first_name, p.img_src FROM projects p, users u WHERE p.creator = u.email';
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = '
+  SELECT p.project_id
+  FROM projects p';
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    while($row = pg_fetch_row($result)) {
-        echo '<div class="col-md-4">';
-        echo '<img src="' .$row[4] . '" style="max-width:100%;" />';
-        echo '<div class="panel panel-default"> <div class="panel-body" style="padding: 0 20px">';
-        echo '<h3><a href="projectdetails.php?project=' . $row[0] . '">' . $row[1] . '</a></h3>';
-        echo '<div>by <a>' . $row[3] . '</a></div>';
-        echo '<br /><br />';
-        echo '<div class="small ellipsis">' . $row[2] . '</div>';
-        echo '<br /><br />';
-        echo '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:' . 70 . '%"></div></div>';
-        echo '<br />';
-        echo '</div></div>';
-        echo '</div>';
-    }
-    pg_free_result($result);
+  while($row = pg_fetch_row($result)) {
+    cardHtml($row[0]);
+  }
+  pg_free_result($result);
 }
 
 function isValidUser($username) {
@@ -41,7 +35,7 @@ function isValidUser($username) {
 }
 
 function getProject($projectId){
-  $query = "SELECT * FROM projects p WHERE p.project_id='$projectId'";
+  $query = "SELECT * FROM projects p WHERE p.project_id= $projectId ;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
   $data = pg_fetch_row($result);
@@ -50,30 +44,51 @@ function getProject($projectId){
 }
 
 function getProjectRewards($projectId){
-  $query = "SELECT r.reward_id, r.title, r.pledge, r.description, r.quantity 
-            FROM rewards r, projects p 
-            WHERE r.project_id = p.project_id 
-            AND p.project_id='$projectId'
-            ORDER BY r.quantity DESC";
+  $query = "SELECT r.reward_id, r.title, r.pledge, r.description, r.quantity
+  FROM rewards r, projects p
+  WHERE r.project_id = p.project_id
+  AND p.project_id='$projectId'
+  ORDER BY r.quantity DESC";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   return $result;
 }
 
-function updateProject($projectId,$title,$description,$img_src){
-  $query = "UPDATE projects SET title = '$title', description = '$description', img_src = '$img_src' WHERE project_id = $projectId;";
+function getReward($rewardId){
+  $query = "SELECT * FROM rewards r WHERE r.reward_id= $rewardId ;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-  echo '<script>location.replace("projectdetails.php?project=' . $projectId . '");</script>';
+
+  $data = pg_fetch_row($result);
+  pg_free_result($result);
+  return $data;
+}
+
+function updateProject($projectId,$title,$description,$img_src){
+  if (empty($img_src)) {
+    $project = getProject($projectId);
+    $img_src = $project[3];
+  }
+
+  $query = "UPDATE projects SET title = '$title', description = '$description', img_src = '$img_src' WHERE project_id = $projectId";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  pg_free_result($result);
+}
+
+function updateReward($rewardId, $title, $description,$quantity,$pledge){
+  $query = "UPDATE rewards
+  SET title = '$title' , description = '$description' , quantity=$quantity, pledge=$pledge
+  WHERE reward_id=$rewardId";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   pg_free_result($result);
 }
 
 function checkDeleteProject($projectId){
-  $query = "SELECT EXISTS(SELECT 1 FROM projects WHERE project_id=$projectId AND raised>0);";
+  $query = "SELECT COUNT(f.*) FROM projects p, fundings f, rewards r WHERE p.project_id=r.project_id AND r.reward_id=f.reward_id AND p.project_id=$projectId;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   $row = pg_fetch_array($result);
-  if($row[0] == true){
-    echo "You can't remove a project which has been bidded!";
+  if($row[0] > 0){
+    return false;
   }else{
-    deleteProject($projectId);
+    return true;
   }
 }
 
@@ -83,169 +98,226 @@ function deleteProject($projectId){
   echo '<script>location.replace("projects.php");</script>';
 }
 
+function checkDeleteReward($rewardId){
+  $query = "SELECT EXISTS(SELECT 1 FROM fundings WHERE reward_id=$rewardId);";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $row = pg_fetch_array($result);
+  if($row[0] == t){
+    return false;
+  }else{
+    return true;
+  }
+}
+
+function deleteReward($rewardId){
+  $query = "DELETE FROM rewards where reward_id=$rewardId";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+}
+
+function getFundingCountByMonth($projectId, $year, $month){
+  $query = "SELECT COUNT(f.*)
+FROM fundings f, projects p, rewards r
+WHERE EXTRACT(MONTH FROM f.funding_datetime) = $month
+AND EXTRACT(YEAR FROM f.funding_datetime) = $year
+AND p.project_id=r.project_id
+AND r.reward_id=f.reward_id
+AND p.project_id=$projectId";
+
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $data = pg_fetch_row($result);
+  return $data;
+}
+
+function getFundingTotalByMonth($projectId, $year, $month){
+  $query = "SELECT SUM(f.amount)
+FROM fundings f, projects p, rewards r
+WHERE EXTRACT(MONTH FROM f.funding_datetime) = $month
+AND EXTRACT(YEAR FROM f.funding_datetime) = $year
+AND p.project_id=r.project_id
+AND r.reward_id=f.reward_id
+AND p.project_id=$projectId";
+
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $data = pg_fetch_row($result);
+  return $data;
+}
+
+function getTopFunderByProject($projectId){
+  $query = "SELECT f.email, SUM(f.amount),
+rank() OVER (ORDER BY SUM(f.amount) DESC) AS rank
+FROM projects p, fundings f, rewards r
+WHERE p.project_id = r.project_id
+AND r.reward_id = f.reward_id
+AND p.project_id = $projectId
+GROUP BY f.email
+ORDER BY SUM(f.amount) DESC
+LIMIT 5";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  return $result;
+}
 
 function createProject($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised) {
-    $start_date = $start_date == '' ? NULL : $start_date;
-    $end_date = $end_date == '' ? NULL : $end_date;
-    $goal = intval($goal);
-    $raised = intval($raised);
-    $params = array($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised);
-    $result = pg_query_params('INSERT INTO Projects VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8) RETURNING project_id', $params) or die('Query failed: ' . pg_last_error());;
-    if(!$result) {
-        echo 'Error in ' . pg_result_error(pg_get_result());
-    } else {
-        $data = pg_fetch_row($result)[0];
-        pg_free_result($result);
-        return $data;
-    }
+  $start_date = $start_date == '' ? NULL : $start_date;
+  $end_date = $end_date == '' ? NULL : $end_date;
+  $goal = intval($goal);
+  $raised = intval($raised);
+  $params = array($title, $creator, $img_src, $description, $start_date, $end_date, $goal, $raised);
+  $result = pg_query_params('INSERT INTO Projects VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8) RETURNING project_id', $params) or die('Query failed: ' . pg_last_error());;
+  if(!$result) {
+    echo 'Error in ' . pg_result_error(pg_get_result());
+  } else {
+    $data = pg_fetch_row($result)[0];
+    pg_free_result($result);
+    return $data;
+  }
 }
 
 function getFirstName($email) {
-    $query = "SELECT u.first_name FROM users u WHERE u.email = '$email'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "SELECT u.first_name FROM users u WHERE u.email = '$email'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    $data = pg_fetch_row($result)[0];
-    pg_free_result($result);
-    return $data;
+  $data = pg_fetch_row($result)[0];
+  pg_free_result($result);
+  return $data;
 }
 
 function checkAccountExist($email) {
-    $query = "SELECT * FROM users u WHERE u.email = '$email'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "SELECT * FROM users u WHERE u.email = '$email'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    $data = pg_fetch_row($result)[0];
-    pg_free_result($result);
-    return $data;
+  $data = pg_fetch_row($result)[0];
+  pg_free_result($result);
+  return $data;
 }
 
 function createUser($email, $first_name, $last_name, $hashedpassword, $role) {
-    $query = "INSERT INTO users 
-            (email,first_name,last_name,password,role) 
-            VALUES('" . $email . "', '" . $first_name . "', '" . $last_name . "', '" . $hashedpassword . "', '" . $role . "')";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "INSERT INTO users
+  (email,first_name,last_name,password,role)
+  VALUES('" . $email . "', '" . $first_name . "', '" . $last_name . "', '" . $hashedpassword . "', '" . $role . "')";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
 function getUser($email) {
-    $query = "SELECT u.first_name, u.last_name, u.website, u.biography FROM users u WHERE u.email = '$email'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "SELECT u.first_name, u.last_name, u.website, u.biography FROM users u WHERE u.email = '$email'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    $data = pg_fetch_row($result);
-    pg_free_result($result);
-    return $data;
+  $data = pg_fetch_row($result);
+  pg_free_result($result);
+  return $data;
 }
 
 function updateProfile($email, $website, $biography) {
-    $query = "UPDATE users 
-            SET website = '" . $website . "', biography = '" . $biography . "' 
-            WHERE email = '" . $email . "'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "UPDATE users
+  SET website = '" . $website . "', biography = '" . $biography . "'
+  WHERE email = '" . $email . "'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
 function isValidPassword($email, $password) {
-    $query = "SELECT u.password 
-              FROM users u 
-              WHERE u.email = '". $email . "'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "SELECT u.password
+  FROM users u
+  WHERE u.email = '". $email . "'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    $data = pg_fetch_row($result)[0];
+  $data = pg_fetch_row($result)[0];
 
-    pg_free_result($result);
-    return password_verify($password, $data);
+  pg_free_result($result);
+  return password_verify($password, $data);
 }
 
 function updatePassword($email, $password) {
-    $query = "UPDATE users 
-              SET password = '" . $password . "' 
-              WHERE email = '" . $email . "'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "UPDATE users
+  SET password = '" . $password . "'
+  WHERE email = '" . $email . "'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
 function getUserProjects($email) {
-    $query = "SELECT p.project_id, p.title, p.start_date, p.end_date, p.goal, p.raised 
-              FROM projects p 
-              WHERE p.creator = '" . $email . "' 
-              ORDER BY p.end_date DESC";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "SELECT p.project_id, p.title, p.start_date, p.end_date, p.goal, p.raised
+  FROM projects p
+  WHERE p.creator = '" . $email . "'
+  ORDER BY p.end_date DESC";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    return $result;
+  return $result;
 }
 
 function getUserFundings($email) {
-    $query = "SELECT p.project_id, p.title, f.funding_datetime, f.amount, r.title
-              FROM fundings f, rewards r, projects p
-              WHERE r.reward_id = f.reward_id 
-              AND p.project_id = r.project_id
-              AND f.email = '" . $email . "' 
-              ORDER BY f.funding_datetime DESC";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "SELECT p.project_id, p.title, f.funding_datetime, f.amount, r.title
+  FROM fundings f, rewards r, projects p
+  WHERE r.reward_id = f.reward_id
+  AND p.project_id = r.project_id
+  AND f.email = '" . $email . "'
+  ORDER BY f.funding_datetime DESC";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    return $result;
+  return $result;
 }
 
 function selectReward($project_id, $time, $pledge, $email, $reward_id) {
-    $query = "UPDATE rewards 
-              SET quantity = (quantity - 1) 
-              WHERE reward_id = '" . $reward_id . "'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "UPDATE rewards
+  SET quantity = (quantity - 1)
+  WHERE reward_id = '" . $reward_id . "'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    $query = "UPDATE projects
-              SET raised = (raised + $pledge) 
-              WHERE project_id = '" . $project_id . "'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "UPDATE projects
+  SET raised = (raised + $pledge)
+  WHERE project_id = '" . $project_id . "'";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    $query = "INSERT INTO fundings
-            VALUES(DEFAULT, '" . $time . "', '" . $pledge . "', '" . $email . "', '" . $reward_id . "')";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "INSERT INTO fundings
+  VALUES(DEFAULT, '" . $time . "', '" . $pledge . "', '" . $email . "', '" . $reward_id . "')";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 }
 
 function getProjectBackers($project_id) {
-    $query = "SELECT COUNT(*)
-              FROM fundings f, rewards r, projects p
-              WHERE r.reward_id = f.reward_id 
-              AND p.project_id = r.project_id
-              AND p.project_id = '" . $project_id . "' 
-              GROUP BY p.project_id";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  $query = "SELECT COUNT(*)
+  FROM fundings f, rewards r, projects p
+  WHERE r.reward_id = f.reward_id
+  AND p.project_id = r.project_id
+  AND p.project_id = '" . $project_id . "'
+  GROUP BY p.project_id";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    $data = pg_fetch_row($result);
-    pg_free_result($result);
-    return $data;
+  $data = pg_fetch_row($result);
+  pg_free_result($result);
+  return $data;
 }
 
 function getAllUsers($email, $role) {
-    $query = "SELECT u.first_name, u.last_name, u.email, u.role
-              FROM users u
-              WHERE u.email NOT IN (
-                  SELECT u1.email
-                  FROM users u1 
-                  WHERE u1.email = '". $email . "'
-              )
-              AND u.role = '". $role . "'
-              ORDER BY u.first_name, u.last_name";
+  $query = "SELECT u.first_name, u.last_name, u.email, u.role
+  FROM users u
+  WHERE u.email NOT IN (
+    SELECT u1.email
+    FROM users u1
+    WHERE u1.email = '". $email . "'
+    )
+    AND u.role = '". $role . "'
+    ORDER BY u.first_name, u.last_name";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     return $result;
-}
+  }
 
-function deleteUser($email) {
-    $query = "DELETE 
-              FROM users u
-              WHERE u.email = '" . $email . "'";
+  function deleteUser($email) {
+    $query = "DELETE
+    FROM users u
+    WHERE u.email = '" . $email . "'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-}
+  }
 
-function getUserRole($email) {
+  function getUserRole($email) {
     $query = "SELECT u.role
-              FROM users u
-              WHERE u.email = '" . $email . "'";
+    FROM users u
+    WHERE u.email = '" . $email . "'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     $data = pg_fetch_row($result);
     pg_free_result($result);
-    return $data;
-}
+    return $data[0];
+  }
 
-function cleanInputString($str) {
-  return htmlspecialchars(strip_tags(trim($str)));
-}
-?>
+  function cleanInputString($str) {
+    return htmlspecialchars(strip_tags(trim($str)));
+  }
+  ?>

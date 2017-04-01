@@ -66,6 +66,7 @@
             <th>End Date</th>
             <th>Goal</th>
             <th>Raised</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -77,6 +78,9 @@
                 <td><?php echo date('d M Y', strtotime($row[3])) ?></td>
                 <td>$ <?php echo number_format($row[4],0, '.', ',') ?></td>
                 <td>$ <?php echo number_format($row[5],0, '.', ',') ?></td>
+                <td><a href="edit-project.php?project=<?php echo $row[0] ?>" class="btn btn-default" role="button">Edit</a>
+                  <a href="summary-project.php?project=<?php echo $row[0] ?>" class="btn btn-default" role="button">Summary</a>
+                </td>
         </tr>
             <?php }
             ?>
