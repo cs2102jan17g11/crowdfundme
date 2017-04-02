@@ -91,7 +91,7 @@ if(isset($_POST['submit'])) {
                     <!-- Case for 0 dollar pledges -->
                     <br>
                     <div style="width:20%">
-                        <input type="number" name="pledge" id="pledge"  class="form-control" placeholder="Pledge amount">
+                        <input type="number" name="pledge" id="pledge"  class="form-control" min="1" placeholder="Pledge amount">
                     </div>
                     <br>
                     <input type="submit" name="submit" value="Make Pledge" class="btn btn-primary">

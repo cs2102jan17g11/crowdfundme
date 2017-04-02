@@ -67,11 +67,11 @@
         <div class="form-group row" id="allow_rewards">
             <div class="col-md-3">
                 <label>Pledge amount</label>
-                <input class="form-control" type="text" placeholder="42" name="pledge" required>
+                <input class="form-control" type="text" placeholder="42" name="pledge" min="1" required>
                 </div>
             <div class="col-md-3">
                 <label>Quantity</label>
-                <input class="form-control" type="number" name="quantity" placeholder="10" required>
+                <input class="form-control" type="number" name="quantity" placeholder="10" min="1" required>
             </div>
         </div>
         <button type="submit" name='submit' class="btn btn-primary">Start my project!</button>
