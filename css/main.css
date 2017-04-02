@@ -164,6 +164,14 @@ box-shadow: 0 0.2em red;
   border-color: #F05F40;
   transition: all 0.3s;
 }
+
+.btn-primary:active {
+  color: white; 
+  background-color: #F05F40;
+  border-color: #F05F40;
+  transition: all 0.3s;
+}
+
 .box-padding{
   padding: 20px;
 }
@@ -247,4 +255,13 @@ box-shadow: 0 0.2em red;
 
 .card .panel-footer .table {
   margin-bottom: 0px;
+}
+
+.panel-primary {
+  border-color: #F05F40;
+}
+
+.panel-primary>.panel-heading {
+  background-color: #F05F40;
+  border-color: #F05F40;
 }

@@ -329,4 +329,16 @@ function getAllUsers($email, $role) {
   function cleanInputString($str) {
     return htmlspecialchars(strip_tags(trim($str)));
   }
-  ?>
+
+  function createReward($project_id, $title, $description, $pledge, $quantity, $isPledgeWithoutRewards) {
+    if($isPledgeWithoutRewards == true) {
+      $pledge = 0;
+      $quantity = 0;
+    }
+
+    $params = array($title, $pledge, $description, $quantity, $project_id);
+    $query = "INSERT INTO rewards(reward_id, title, pledge, description, quantity, project_id) VALUES(DEFAULT, $1, $2, $3, $4, $5)"; 
+    $result = pg_query_params($query, $params) or die('Query failed: ' . pg_last_error());
+    pg_free_result($result);
+  }
+?>

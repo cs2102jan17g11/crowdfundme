@@ -18,8 +18,19 @@
     navbar(URL_INDEX);
     $project_id = $_GET['project'];
     $project = getProject($project_id);
-    print_r($project);
     $project_title = $project[1];
+
+    if(isset($_POST['submit'])) {
+        $title = pg_escape_string($_POST['title']);
+        $descrip = pg_escape_string($_POST['description']);
+        $quantity = pg_escape_string($_POST['quantity']);
+        $pledge = pg_escape_string($_POST['pledge']);
+        $isPledgeWithoutRewards = isset($_POST['isPledgeWithoutRewards']);
+
+        createReward($project_id, $title, $descrip, $pledge, $quantity, $isPledgeWithoutRewards);
+
+        header("location: edit-project.php?project=" . $project_id);
+    }
 ?>
 
 <div class="container">
@@ -28,7 +39,7 @@
         Rewards Creation
     </h2>
 
-    <form method="post" action="create.php">
+    <form method="post" action="">
         <div class="form-group">
             <label>Project</label>
             <input class="form-control" type="text" value="<?php echo $project_title; ?>" disabled/>
@@ -44,7 +55,7 @@
         </div>
         
         <div class="checkbox">
-            <label><input onclick="hideRewardsGroup(this)" type="checkbox" value="">Allow pledging without rewards</label>
+            <label><input onclick="hideRewardsGroup(this)" type="checkbox" name="isPledgeWithoutRewards" value="">Allow pledging without rewards</label>
         </div>
         <script>
             // called by checkbox for pledging
@@ -67,7 +78,7 @@
         <div class="form-group row" id="allow_rewards">
             <div class="col-md-3">
                 <label>Pledge amount</label>
-                <input class="form-control" type="text" placeholder="42" name="pledge" min="1" required>
+                <input class="form-control" type="number" placeholder="42" name="pledge" min="1" required>
                 </div>
             <div class="col-md-3">
                 <label>Quantity</label>

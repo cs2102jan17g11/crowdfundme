@@ -51,8 +51,9 @@
     <div class="row">
       <form role="form" method="post" action="" >
         <div class="col-sm-12 col-md-12">
-          <div class="panel panel-default" valign="middle">
-            <div class="panel-heading"><b>Edit Project</b>
+          <div class="panel panel-primary" valign="middle">
+            <div class="panel-heading">
+              <h2>Edit Project</h2>
               <?php
               if(isset($error)){?>
                 <div class="alert alert-danger">
@@ -103,7 +104,11 @@
                 <div>$<?php echo $project[8] ?> / $<?php echo $project[7] ?></div>
               </div>
 
-
+            </div>
+              <div class="col-sm-12 col-md-12">
+                <button type="submit" class="btn btn-primary" name="formUpdate">Save and Update</button>
+                <a href="profile.php" class="btn btn-default" style="margin-left: 20px">Discard changes</a>
+                <button type="submit" class="btn btn-danger" name="formDelete" style="float: right;">Delete Project</button>
             </div>
 
           </div>
@@ -111,11 +116,12 @@
 
       </div>
       <div class="col-sm-12 col-md-12">
-      <div class="panel panel-default">
+      <div class="panel panel-primary">
         <div class="panel-heading">
-          <b>Edit Rewards</b>
+          <h2>Rewards Summary</h2>
         </div>
         <div class="panel-body">
+          <div class="col-sm-12 col-md-12">
           <table class="table table-striped">
             <thead>
               <tr>
@@ -133,8 +139,8 @@
                   <tr>
                     <td><?php echo $row[1] ?></td>
                     <td><?php echo $row[3] ?></td>
-                    <td>$ <?php echo number_format($row[2],0, '.', ',') ?> or more</td>
-                    <td><?php echo $row[4] ?></td>
+                    <td>$ <?php echo number_format($row[2],0, '.', ','); ?></td>
+                    <td><?php echo $row[2] == "0" ? 'No limit' : $row[4]; ?></td>
                     <td><a href="edit-reward.php?reward=<?php echo $row[0] ?>" class="btn btn-default" role="button">Edit</a></td>
                   </tr>
                   <?php }
@@ -150,15 +156,12 @@
                   <?php }?>
                 </tbody>
               </table>
-              <a href="create_rewards.php?project=<?php echo $project[0]; ?>" class="btn btn-success">Create rewards</a>
-              <a href="create_rewards.php?project=<?php echo $project[0]; ?>" class="btn btn-success">Create default reward</a>
+              </div>
+              <div class="col-sm-12 col-md-12">
+              <a href="create_rewards.php?project=<?php echo $project[0]; ?>" class="btn btn-primary">Create additional rewards</a>
+              </div>
             </div>
           </div>
-          </div>
-          <div class="col-sm-12 col-md-12">
-            <button type="submit" class="btn btn-success" name="formUpdate">Update</button>
-            <a href="profile.php" class="btn btn-default" style="margin-left: 20px">Cancel</a>
-            <button type="submit" class="btn btn-danger" name="formDelete" style="float: right;">Delete</button>
           </div>
         </form>
       </div>
