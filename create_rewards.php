@@ -16,9 +16,69 @@
 <?php
     include_once("navbar.php");
     navbar(URL_INDEX);
-    $project = $_GET['project'];
-    echo $project;
+    $project_id = $_GET['project'];
+    $project = getProject($project_id);
+    print_r($project);
+    $project_title = $project[1];
 ?>
+
+<div class="container">
+    <div class="row">
+    <h2>
+        Rewards Creation
+    </h2>
+
+    <form method="post" action="create.php">
+        <div class="form-group">
+            <label>Project</label>
+            <input class="form-control" type="text" value="<?php echo $project_title; ?>" disabled/>
+        </div>
+        <div class="form-group">
+          <label>Title for your reward</label>
+          <input type="text" class="form-control" placeholder="Majestic funder of the greatest honor" name="title" required value=<?php if(isset($_POST['title'])) echo $_POST['title']; ?>>
+        </div>
+
+        <div class="form-group">
+            <label>Description for your reward</label>
+            <input class="form-control" type="text" placeholder="Your choice of lovable colors" name="description" required value=<?php if(isset($_POST['description'])) echo $_POST['description']; ?>>
+        </div>
+        
+        <div class="checkbox">
+            <label><input onclick="hideRewardsGroup(this)" type="checkbox" value="">Allow pledging without rewards</label>
+        </div>
+        <script>
+            // called by checkbox for pledging
+            function hideRewardsGroup(chckbx) {
+                allowRewardsElements = document.getElementById("allow_rewards");
+                inputElements = allowRewardsElements.getElementsByTagName("input");
+                if(chckbx.checked == true) {
+                    allowRewardsElements.setAttribute('hidden', true);
+                    for(i = 0; i < inputElements.length; i++) {
+                        inputElements[i].removeAttribute('required');
+                    }
+                } else {
+                    allowRewardsElements.removeAttribute('hidden');
+                    for(i = 0; i < inputElements.length; i++) {
+                        inputElements[i].setAttribute('required', true);
+                    }
+                }
+            }
+        </script>
+        <div class="form-group row" id="allow_rewards">
+            <div class="col-md-3">
+                <label>Pledge amount</label>
+                <input class="form-control" type="text" placeholder="42" name="pledge" required>
+                </div>
+            <div class="col-md-3">
+                <label>Quantity</label>
+                <input class="form-control" type="number" name="quantity" placeholder="10" required>
+            </div>
+        </div>
+        <button type="submit" name='submit' class="btn btn-primary">Start my project!</button>
+      </form>
+    </div>
+    <br />
+</div>
 
 
 <?php
