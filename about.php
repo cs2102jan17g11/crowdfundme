@@ -19,28 +19,26 @@
     navbar(URL_ABOUT);
 ?>
 
-<div class="container">
-
-    <div class="box-padding">
-
-        <br>
-        <br><br><br><br>
-
-        <center>
-            <h3>
-                <b>
-                At Crowdfundmeeeee, our mission is to empower<br>
-                people to unite around ideas that matter to them,<br>
-                and together make those ideas come to life.<br>
-                Every inventive idea should have its shot, and every<br>
-                creative entrepreneur should have their moment.
-                </b>
-            </h3>
-            <img class="img-responsive" src="img/crowdfunding.jpg">
+<div class="splash about">
+    <div class="splash-opacity">
+      <div class="container">
+      <div class="row">
+        <div class="col-md-4 pull-right">
+          <br  />
+          <h1>The best concepts, ever.</h1>
+          <br />
+          <hr class="half-rule"/>
+          <br /><br />
+          <h4>
+            At <span class="red">Crowdfundmeeeee</span>, our mission is to empower people to unite around ideas that matter to them, and together make those ideas come to <span class="red">life</span>.<br />Every inventive idea should have its shot, and every creative entrepreneur should have their moment.
+          </h4>
+        </div>
+      </div>
+      </div>
     </div>
-
-    <br />
-
+</div>
+<br />
+<div class="container">
     <div class="row" >
         <div class="col-sm-12 col-md-4">
             <div class="panel panel-default">
