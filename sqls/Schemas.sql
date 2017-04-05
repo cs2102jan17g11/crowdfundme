@@ -38,5 +38,6 @@ CREATE TABLE Fundings (
   email VARCHAR(255) NOT NULL,
   reward_id INTEGER NOT NULL,
   FOREIGN KEY (reward_id) REFERENCES Rewards(reward_id),
-  FOREIGN KEY (email) REFERENCES Users(email)
+  FOREIGN KEY (email) REFERENCES Users(email),
+  CONSTRAINT positive_amount CHECK(amount > 0)
 );
