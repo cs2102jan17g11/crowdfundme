@@ -43,6 +43,12 @@ function getProject($projectId){
   return $data;
 }
 
+function getAllProjects(){
+  $query = "SELECT * FROM projects;";
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  return $result;
+}
+
 function getProjectRewards($projectId){
   $query = "SELECT r.reward_id, r.title, r.pledge, r.description, r.quantity
   FROM rewards r, projects p
@@ -73,9 +79,9 @@ function updateProject($projectId,$title,$description,$img_src){
   pg_free_result($result);
 }
 
-function updateReward($rewardId, $title, $description,$quantity,$pledge){
+function updateReward($rewardId, $title, $description){
   $query = "UPDATE rewards
-  SET title = '$title' , description = '$description' , quantity=$quantity, pledge=$pledge
+  SET title = '$title' , description = '$description'
   WHERE reward_id=$rewardId";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   pg_free_result($result);

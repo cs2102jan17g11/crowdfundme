@@ -45,6 +45,7 @@ INSERT INTO Users (first_name,last_name,email,password,website,biography,role) V
 INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('Xanthus','Hickman','xanthushickman@egetlaoreetposuere.org','yRAlWzWA','Lorem ipsum','Lorem ipsum','user');
 INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('Coby','Rivas','cobyrivas@tinciduntnequevitae.ca','MtXpPWXi','Lorem','Lorem','user');
 INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('Shelley','Butler','shelleybutler@risus.org','hdzLVAXw','Lorem ipsum','Lorem ipsum','user');
+INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('admin','admin','superadmin@crowdfundme.org','password','Lorem ipsum','Lorem ipsum','admin');
 
 /* For the projects table - Currently 22 ongoing projects, will be adding to this list*/
 INSERT INTO Projects (project_id,title,creator,img_src,description,start_date,end_date,goal,raised) VALUES (DEFAULT,'Lisa Frank Makeup Collaboration','luciusrichardson@commodoipsum.co.uk','https://s3-ap-southeast-1.amazonaws.com/cs2102jan17g11-crowdfundme/Lisa+Frank.png','We want to put the Lisa Frank iconic artwork on our high quality & cruelty-free makeup! Help bring this collab to life!','2015-06-21','2017-06-28',30000,15000);

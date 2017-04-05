@@ -31,16 +31,8 @@
       $error[] = 'Please enter a reward description!';
     }
 
-    if ($quantity == "") {
-      $error[] = 'Please enter a reward quantity!';
-    }
-
-    if ($pledge == "") {
-      $error[] = 'Please enter a reward pledge amount!';
-    }
-
     if (!isset($error)) {
-      updateReward($reward[0], $title, $description,$quantity,$pledge);
+      updateReward($reward[0], $title, $description);
       header("location: edit-project.php?project=$reward[5]");
     }
   }else if(isset($_POST['formDelete'])){
@@ -92,12 +84,12 @@
 
                 <div class="form-group">
                   <label for="inputQuantity">Quantity :</label>
-                  <input type="text" name="quantity" class="form-control input-number" id="inputQuantity" value="<?php echo $reward[4] ?>" min="0" placeholder="Quantity" />
+                  <div><?php echo $reward[4] ?></div>
                 </div>
 
                 <div class="form-group">
                   <label for="inputPledge">Pledge amount :</label>
-                  <input type="text" name="pledge" class="form-control input-number" id="inputPledge" value="<?php echo $reward[2] ?>" min="0" placeholder="Pledge amount" />
+                  <div><?php echo $reward[2] ?></div>
                 </div>
 
               </div>
