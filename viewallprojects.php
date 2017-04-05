@@ -15,7 +15,7 @@
 <body>
 <?php
 include_once("navbar.php");
-navbar(URL_VIEW_USERS);
+navbar(URL_VIEW_PROJECTS);
 ?>
 
 
