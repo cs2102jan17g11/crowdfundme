@@ -9,7 +9,7 @@ define("URL_VIEW_USERS", "VIUS");
 define("URL_CREATE_USER", "CRUS");
 
 define("URL_INDEX", "INDE");
-
+define("URL_ABOUT", "ABOU");
 // define("URL_", "");
 
 ?>
