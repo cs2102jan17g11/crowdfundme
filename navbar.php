@@ -39,6 +39,9 @@ if(!isset($_SESSION)) { session_start(); } ?>
                   <li <?php echo ($URL == URL_CREATE_USER) ? 'class="active"': ""; ?>" >
                   <a href="createuser.php">Create User</a>
                   </li>
+                  <li <?php echo ($URL == URL_VIEW_PROJECTS) ? 'class="active"': ""; ?>" >
+                  <a href="viewallprojects.php">View Projects</a>
+                  </li>
               <?php } ?>
 
           </ul>
