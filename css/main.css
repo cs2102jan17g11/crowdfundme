@@ -41,6 +41,9 @@ a {
   background-image: url("/img/pexels-photo-132986.jpeg");
 }
 
+.splash.explore {
+  background-image: url("/img/pexels-photo-67448.jpeg");
+}
 .splash {
 
   height: 600px;
