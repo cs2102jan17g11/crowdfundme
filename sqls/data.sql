@@ -1,5 +1,5 @@
 ﻿/* For the user table - 46 records with 4 admin, 36 users with projects and 8 without projects */
-INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('Lucius','Richardson','luciusrichardson@commodoipsum.co.uk','$2y$10$R75BAJfv1n5GHDs25QP14uW.LkwoRn657U/f1W.WMfSZ5.TPJXNGu',' ',' ','user');
+INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('Lucius','Richardson','luciusrichardson@commodoipsum.co.uk','$2y$10$R75BAJfv1n5GHDs25QP14uW.LkwoRn657U/f1W.WMfSZ5.TPJXNGu',' ',' ','admin');
 INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('Fay','Boyd','fayboyd@quamquis.net','fXPGxPOf','www.boydcreations.com','Fay Boyd is an Executive Producer and Creative Director in his company - The Boyd creations.','user');
 INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('Alisa','Williams','alisawilliams@nunc.org','FQRPDFFC','egestas','Lorem ipsum dolor sit amet,','user');
 INSERT INTO Users (first_name,last_name,email,password,website,biography,role) VALUES ('Damon','Kidd','damonkidd@quistristique.com','bvoyfPeZ','convallis','Lorem ipsum dolor sit','user');
