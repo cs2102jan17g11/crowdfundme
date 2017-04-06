@@ -68,7 +68,7 @@
                             <input class="form-control" type="text" name="userEmail" placeholder="Email" required/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="userPass" placeholder="Password" required/>
+                            <input class="form-control" type="password" name="userPass" placeholder="Password" required/>
                         </div>
                         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                     </form>
