@@ -49,6 +49,7 @@
                         entrepreneurial people everywhere to bring their ideas to life. We wanted to create a platform
                         to allow creative people to work together, because that's when amazing things happen.
                     </div>
+                    <br />
                 </div>
             </div>
         </div>
@@ -61,6 +62,7 @@
                         To make that happen, we’re removing the barriers that creators face in bringing their projects
                         to life and connecting entrepreneurs like you to a global audience of passionate backers.
                     </div>
+                    <br />
                 </div>
             </div>
         </div>
@@ -73,6 +75,7 @@
                         projects. We will connect entrepreneurs like you to a global audience of passionate backers. Everyone
                         will have control over their work and the opportunity to share it with a vibrant community of backers.
                     </div>
+                    <br />
                 </div>
             </div>
         </div>
@@ -129,6 +132,7 @@
                     </div>
                 </div>
             </div>
+            <br />
         </div>
     </div>
 
@@ -137,7 +141,7 @@
             <center>
                 <h3><b>Ready to go?</b></h3>
             </center>
-            <div class="row" >
+            <div class="row">
                 <div class="col-sm-12 col-md-3"></div>
                 <div class="col-sm-12 col-md-3">
                     <div class="content-padding">
@@ -153,6 +157,7 @@
                 </div>
                 <div class="col-sm-12 col-md-3"></div>
             </div>
+            <br />
         </div>
     </div>
 </div>
