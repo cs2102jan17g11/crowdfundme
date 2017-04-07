@@ -22,7 +22,7 @@ function selectTopTrendingProjects($limit) {
     SELECT p.project_id
     FROM projects p 
     WHERE funding_percent(p.project_id) IS NOT NULL 
-    ORDER BY funding_percent(p.project_id) DESC limit $1', array($limit)) or die('Query failed: ' . pg_last_error());
+    ORDER BY funding_percent(p.project_id) DESC LIMIT $1', array($limit)) or die('Query failed: ' . pg_last_error());
 
   $arr = pg_fetch_all($result);
   pg_free_result($result);

@@ -18,12 +18,30 @@
   include_once("navbar.php");
   navbar(URL_PROJECTS_VIEW);
 ?>
-
-<div class="container">
-    <div style="text-align: center">
-      <h3>We have <?php echo countAllProjects(); ?> ongoing projects!</h3>
+<div class="splash explore">
+  <div class="splash-opacity">
+    <div class="container">
+    <div class="row">
+      <div class="col-md-4 pull-right">
+        <br  />
+        <h1>Fund the greatest projects, ever.</h1>
+        <br /><br />
+        <hr class="half-rule"/>
+        <br />
+        <h4>
+          Funding has never been this adventurous. Select from over <span class="red"><?php echo countAllProjects(); ?></span> ongoing projects.
+          <br />
+          <br />
+          Projects like these could never have been realized without someone like you. Fund it. Help it. Realize it. You have the power.
+        </h4>
+      </div>
     </div>
-    <br /><br />
+    </div>
+  </div>
+</div>
+<div class="container">
+    <br />
+    <h1>Our Projects</h1>
     <div class="row">
       <?php getProjectNames() ?>
     </div>

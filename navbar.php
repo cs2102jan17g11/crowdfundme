@@ -29,7 +29,7 @@ if(!isset($_SESSION)) { session_start(); } ?>
               <li <?php echo ($URL == URL_PROJECTS_VIEW) ? 'class="active"': ""; ?>" >
                 <a href="/projects.php">Explore</a>
               </li>
-              <li>
+              <li <?php echo ($URL == URL_ABOUT) ? 'class="active"': ""; ?>" >
                   <a href="/about.php">About</a>
               </li>
               <?php if(isset($_SESSION['userRole']) && $_SESSION['userRole'] == 'admin') { ?>
@@ -38,6 +38,9 @@ if(!isset($_SESSION)) { session_start(); } ?>
                   </li>
                   <li <?php echo ($URL == URL_CREATE_USER) ? 'class="active"': ""; ?>" >
                   <a href="createuser.php">Create User</a>
+                  </li>
+                  <li <?php echo ($URL == URL_VIEW_PROJECTS) ? 'class="active"': ""; ?>" >
+                  <a href="viewallprojects.php">View Projects</a>
                   </li>
               <?php } ?>
 

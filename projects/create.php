@@ -33,8 +33,6 @@
   }
 ?>
 
-
-
     <title>Create | Projects</title>
 </head>
 
@@ -44,8 +42,29 @@
   navbar(URL_PROJECTS_CREATE);
 ?>
 
+<div class="splash create">
+    <div class="splash-opacity">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 pull-right">
+          <br  />
+          <h1>Envision the greatest projects, ever.</h1>
+          <br /><br />
+          <hr class="half-rule"/>
+          <br /><br />
+          <h4>
+            Partner with amazing, innovative, and progressive funders. 
+            We have <?php echo countAllOnGoingProjects() ?> ongoing projects, we <span class="red">warmly</span> welcome you to be one of them!
+          </h4>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+
+<br />
+
 <div class="container">
-    <h1 class="jumbotron">Hi, <?php echo getFirstName($_SESSION['userEmail']); ?>. <br/><small>We have <?php echo countAllOnGoingProjects() ?> ongoing projects, we <span class="red">warmly</span> welcome you to be one of them!</small></h1>
     <div class="row">
       <form method="post" action="create.php">
         <div class="form-group">
@@ -81,6 +100,7 @@
         <button type="submit" name='submit' class="btn btn-primary">Start my project!</button>
       </form>
     </div>
+    <br />
 </div>
 <?php
   include("../footer.php");

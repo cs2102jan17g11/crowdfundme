@@ -16,18 +16,56 @@
   include_once("navbar.php");
   navbar(URL_PROJECTS_VIEW);
   $project = getProject($_GET['project']);
+  $rewards = getProjectRewards($_GET['project']);
+
+  if(isset($_POST['formUpdate'])) {
+    $title = pg_escape_string($_POST['title']);
+    $description = pg_escape_string($_POST['description']);
+    $blurb = pg_escape_string($_POST['imageUrl']);
+
+    if ($title == "") {
+      $error[] = 'Please enter a title!';
+    }
+
+    if ($description == "") {
+      $error[] = 'Please enter a reward description!';
+    }
+
+    if (!isset($error)) {
+      updateProject($project[0], $title, $description, $blurb);
+      header("location: profile.php");
+    }
+  }else if(isset($_POST['formDelete'])){
+    $variable = checkDeleteProject($project[0]);
+    if($variable==true){
+      deleteProject($project[0]);
+      header("location: profile.php");
+    }else{
+      $error[] = 'You cant remove this project as it has been bidded before';
+    }
+  }
   ?>
 
   <div class="container" style="padding-top: 20px">
 
     <div class="row">
-      <form action="do-update-project.php?project=' <?php echo $project[0] ?> '" method="post">
+      <form role="form" method="post" action="" >
         <div class="col-sm-12 col-md-12">
-          <div class="panel panel-default">
-            <div class="panel-heading"><b>Edit Project</b>
-              <a href="delete_confirm_project.php?project=<?php echo $project[0] ?>" style="float: right;">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-              </a>
+          <div class="panel panel-primary" valign="middle">
+            <div class="panel-heading">
+              <h2>Edit Project</h2>
+              <?php
+              if(isset($error)){?>
+                <div class="alert alert-danger">
+                  <strong>Unable to update reward due to the follow reason(s):</strong>
+                  <?php foreach($error as $error){?>
+                    <?php
+                    echo '<p class="bg-danger">'.$error.'</p>';
+                  }?>
+                </div>
+                <?php
+              }
+              ?>
             </div>
 
             <div class="panel-body">
@@ -46,7 +84,7 @@
 
                 <div class="form-group">
                   <label for="inputImageUrl">Project Image :</label>
-                  <input type="file" hidden id="inputImageUrl" name="imageUrl">
+                  <input type="text" class="form-control" id="inputImageUrl" name="imageUrl" placeholder="Enter an image url" value="<?php echo $project[3] ?>"/>
                 </br>
                 <img src="<?php echo $project[3] ?>" width=auto height=auto/>
               </div>
@@ -66,31 +104,73 @@
                 <div>$<?php echo $project[8] ?> / $<?php echo $project[7] ?></div>
               </div>
 
-
+            </div>
+              <div class="col-sm-12 col-md-12">
+                <button type="submit" class="btn btn-primary" name="formUpdate">Save and Update</button>
+                <a href="profile.php" class="btn btn-default" style="margin-left: 20px">Discard changes</a>
+                <button type="submit" class="btn btn-danger" name="formDelete" style="float: right;">Delete Project</button>
             </div>
 
           </div>
         </div>
 
       </div>
-      <div>
-        <div style="margin-left: 45px"><label for="rewards">Rewards :</label></div>
-        <?php
-        getProjectRewards($project[0]);
-        ?>
-      </div>
       <div class="col-sm-12 col-md-12">
-        <button type="submit" class="btn btn-success" name="formUpdate">Submit</button>
-        <a href="myprojectdetails.php?project=<?php echo $project[0] ?>" class="btn btn-default" style="margin-left: 20px">Cancel</a>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Rewards Summary</h2>
+        </div>
+        <div class="panel-body">
+          <div class="col-sm-12 col-md-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Reward</th>
+                <th>Description</th>
+                <th>Pledge</th>
+                <th>Quantity Left</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              if(pg_num_rows($rewards)>0){
+                while ($row = pg_fetch_row($rewards)) { ?>
+                  <tr>
+                    <td><?php echo $row[1] ?></td>
+                    <td><?php echo $row[3] ?></td>
+                    <td>$ <?php echo number_format($row[2],0, '.', ','); ?></td>
+                    <td><?php echo $row[2] == "0" ? 'No limit' : $row[4]; ?></td>
+                    <td><a href="edit-reward.php?reward=<?php echo $row[0] ?>" class="btn btn-default" role="button">Edit</a></td>
+                  </tr>
+                  <?php }
+                }else{
+                  ?>
+                  <tr>
+                    <td>No Rewards found</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <?php }?>
+                </tbody>
+              </table>
+              </div>
+              <div class="col-sm-12 col-md-12">
+              <a href="create_rewards.php?project=<?php echo $project[0]; ?>" class="btn btn-primary">Create additional rewards</a>
+              </div>
+            </div>
+          </div>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
 
-</div>
+    </div>
 
 
-<?php
-pg_close($dbconn);
-?>
-</body>
-</html>
+    <?php
+    pg_close($dbconn);
+    ?>
+  </body>
+  </html>
